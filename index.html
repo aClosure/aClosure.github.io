@@ -115,9 +115,34 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
 
   </li>
   </ul>
@@ -147,10 +172,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="aClosure">
+      <meta itemprop="description" content="おす～！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aClosure's奇妙的妙妙据点">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">从零开始（？）的blog搭建</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-08-12 13:04:12 / 修改时间：14:32:28" itemprop="dateCreated datePublished" datetime="2026-08-12T13:04:12+08:00">2026-08-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-搭建背景"><a href="#1-搭建背景" class="headerlink" title="1.搭建背景"></a>1.搭建背景</h2><blockquote>
+<p>可怜的clo酱自己看不懂moectf的wp，遂先来自己搭个blog用来以后写<del>（才不是自己懒得学py和js所以先用这个摸鱼呢）</del></p>
+</blockquote>
+<p>clo酱要开始微笑调查的ctfer之路了！（笑）</p>
+<p>clo酱总算要准备写点gal的杂谈在网上了！</p>
+<p><del>clo酱 要用这个熟悉下git（）</del></p>
+<h2 id="2-施工计划"><a href="#2-施工计划" class="headerlink" title="2.施工计划"></a>2.施工计划</h2><ul>
+<li><p><input disabled="" type="checkbox"> 
+上线一个分类系统<del>（然后写gal杂谈摸鱼）</del></p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+上线用户登录的功能</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+给主页加一个好看的背景图片</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+内嵌一个qq音乐的播放器（问就是wyy黑，尽管自己wyy都8级了）</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+给blog里头嵌入图片</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+上线一个评论区</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+上线一下文档发布时间</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+想办法搞个看板娘</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+和网友们讨token吃（）</p>
+</li>
+</ul>
+<h2 id="3-施工简报"><a href="#3-施工简报" class="headerlink" title="3.施工简报"></a>3.施工简报</h2><blockquote>
+<p>special：感谢知乎大佬“枫叶”的文章[从零开始搭建个人博客（超详细）](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/102592286">(10 封私信) 从零开始搭建个人博客（超详细） - 知乎</a>)，省去了不少看hexo文档的工夫（谢谢喵）</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/11/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="aClosure">
       <meta itemprop="description" content="おす～！">
     </span>
@@ -272,6 +402,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="aClosure"
+      src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">aClosure</p>
   <div class="site-description" itemprop="description">おす～！</div>
 </div>
@@ -280,9 +412,19 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
