@@ -10,7 +10,24 @@
   <rights>All rights reserved 2026, aClosure</rights>
   <subtitle>おす～！</subtitle>
   <title>aClosure's奇妙的妙妙据点</title>
-  <updated>2026-09-07T03:29:10.713Z</updated>
+  <updated>2026-09-10T08:56:01.387Z</updated>
+  <entry>
+    <author>
+      <name>aClosure</name>
+    </author>
+    <category term="ctfer" scheme="http://example.com/categories/ctfer/"/>
+    <category term="omakase" scheme="http://example.com/tags/omakase/"/>
+    <category term="dev" scheme="http://example.com/tags/dev/"/>
+    <content>
+      <![CDATA[<!-- more --><p>zako~zako~太天真了！</p><p>真的以为我现在就会传上来吗？</p>]]>
+    </content>
+    <id>http://example.com/2026/09/10/moe2026_web/</id>
+    <link href="http://example.com/2026/09/10/moe2026_web/"/>
+    <published>2026-09-10T08:54:07.000Z</published>
+    <summary>你很想点进来看，渴求着今年的答案，是这样吗？</summary>
+    <title>moectf 2026-web write-up</title>
+    <updated>2026-09-10T08:56:01.387Z</updated>
+  </entry>
   <entry>
     <author>
       <name>aClosure</name>
@@ -56,16 +73,7 @@
     <link href="http://example.com/2026/08/11/hello-world/"/>
     <published>2026-08-11T14:17:40.826Z</published>
     <summary>
-      <![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>]]>
+      <![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for]]>
     </summary>
     <title>Hello World</title>
     <updated>2026-08-11T14:17:27.952Z</updated>

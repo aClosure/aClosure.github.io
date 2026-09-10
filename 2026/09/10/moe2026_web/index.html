@@ -1,26 +1,30 @@
 <!doctype html>
 
-<html lang="zh-CN">
+<html lang="zh-CN" data-fancybox-enabled="1">
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
 
-<title>aClosure&#39;s奇妙的妙妙据点</title>
-<meta name="description" content="aClosure&#39;s奇妙的妙妙据点收录 4 篇文章，包括moectf 2026-web write-up、moectf 2025-web write-up、从零开始（？）的blog搭建。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:url" content="http://example.com/">
+<title>moectf 2026-web write-up | aClosure&#39;s奇妙的妙妙据点</title>
+<meta name="description" content="你很想点进来看，渴求着今年的答案，是这样吗？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="moectf 2026-web write-up | aClosure&#39;s奇妙的妙妙据点">
+<meta property="og:url" content="http://example.com/2026/09/10/moe2026_web/">
 <meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:description" content="aClosure&#39;s奇妙的妙妙据点收录 4 篇文章，包括moectf 2026-web write-up、moectf 2025-web write-up、从零开始（？）的blog搭建。">
+<meta property="og:description" content="你很想点进来看，渴求着今年的答案，是这样吗？">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-10T08:54:07.000Z">
+<meta property="article:modified_time" content="2026-09-10T08:56:01.387Z">
 <meta property="article:author" content="aClosure">
+<meta property="article:tag" content="omakase">
+<meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2026/09/10/moe2026_web/">
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","headline":"aClosure's奇妙的妙妙据点","name":"aClosure's奇妙的妙妙据点","description":"aClosure's奇妙的妙妙据点收录 4 篇文章，包括moectf 2026-web write-up、moectf 2025-web write-up、从零开始（？）的blog搭建。","url":"http://example.com/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"http://example.com/"},"about":"aClosure's奇妙的妙妙据点"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"moectf 2026-web write-up","name":"moectf 2026-web write-up | aClosure's奇妙的妙妙据点","description":"你很想点进来看，渴求着今年的答案，是这样吗？","url":"http://example.com/2026/09/10/moe2026_web/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/09/10/moe2026_web/","datePublished":"2026-09-10T08:54:07.000Z","dateModified":"2026-09-10T08:56:01.387Z","author":{"@type":"Person","name":"aClosure"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"omakase, dev"}</script>
 
 <script>
   (function () {
@@ -56,13 +60,16 @@
   
 
   
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
 
   
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="aClosure's奇妙的妙妙据点" type="application/atom+xml">
 </head>
 
 <body
-  class="is-home tag-style-tape bg-style-default"
+  class="is-post tag-style-tape bg-style-default"
   data-default-accent="green"
   data-code-theme="simple"
   data-note-style="sticky"
@@ -106,7 +113,7 @@
   <nav class="site-nav" aria-label="主导航">
     
       
-        <a class="site-nav-link active" href="/">
+        <a class="site-nav-link " href="/">
           
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
 
@@ -218,7 +225,7 @@
 
 
   
-  <main class="paper-shell ">
+  <main class="paper-shell paper-shell--article">
     
 
 <aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
@@ -257,7 +264,7 @@
     <nav class="site-nav-drawer" aria-label="移动端导航">
       
         
-          <a class="active" href="/">
+          <a class="" href="/">
             
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
 
@@ -397,46 +404,28 @@
   
 
   
-    <section class="side-card categories-card">
-      <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-分类</h2>
-      
-        <a href="/categories/ctfer/">
-          <span class="dot dot-0"></span>
-          <strong>ctfer</strong>
-          <em>2</em>
-        </a>
-      
-        <a href="/categories/%E5%88%86%E7%B1%BB/">
-          <span class="dot dot-1"></span>
-          <strong>分类</strong>
-          <em>1</em>
-        </a>
-      
-    </section>
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
 
-    <section class="side-card tag-card">
-      <header class="tag-card__head">
-        <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-flame"></use></svg>
-热门标签</h2>
-        <a class="tag-card__more" href="/tags/">
-          <span>查看全部</span>
+          </button>
+        </header>
+        <div class="toc-content">
           
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+            
+          
+        </div>
+      </section>
+      
 
-        </a>
-      </header>
-      <div class="tag-cloud">
-        
-        
-          <a class="tag-chip tag-chip-0" href="/tags/omakase/">omakase</a>
-        
-          <a class="tag-chip tag-chip-1" href="/tags/dev/">dev</a>
-        
-      </div>
-    </section>
+
+    </div>
   
 
   
@@ -446,230 +435,153 @@
     <section class="paper-main">
       
 
-
-
-
-
-
-  <div class="post-list">
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  
+  <header class="article-header">
     
+      <a class="label-pill" href="/categories/ctfer/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        ctfer
+      </a>
+    
+    <h1>moectf 2026-web write-up</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-09-10</span>
       
-<article class="post-card" data-title="moectf 2026-web write-up">
-  <a class="post-thumb-link" href="/2026/09/10/moe2026_web/" aria-label="moectf 2026-web write-up">
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/dev/">#dev</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <!-- more -->
+<p>zako~zako~太天真了！</p>
+<p>真的以为我现在就会传上来吗？</p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
     
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/2026/09/05/web/">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">moectf 2025-web write-up</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/2026/09/05/web/">
+          <span class="related-card__thumb">
+            
 <div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/camera.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
   
 </div>
 
-  </a>
-  <div class="post-card-copy">
-    <h3><a href="/2026/09/10/moe2026_web/">moectf 2026-web write-up</a></h3>
-    <p>你很想点进来看，渴求着今年的答案，是这样吗？</p>
-    
-      <div class="meta-line meta-line--tags">
-        <span class="meta-tags">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
-
-          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/dev/">#dev</a>
-        </span>
-      </div>
-    
-    <div class="meta-line meta-line--tax">
-      <span class="meta-date">
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
-2026-09-10</span>
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">moectf 2025-web write-up</strong>
+            <em class="related-card__date">2026-09-05</em>
+          </span>
+        </a>
       
-        <span class="meta-cat">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-
-          <a class="meta-cat-link" href="/categories/ctfer/">ctfer</a>
-        </span>
-      
-    </div>
-  </div>
-</article>
-
-    
-      
-<article class="post-card" data-title="moectf 2025-web write-up">
-  <a class="post-thumb-link" href="/2026/09/05/web/" aria-label="moectf 2025-web write-up">
-    
+        <a class="related-card" href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/">
+          <span class="related-card__thumb">
+            
 <div class="paper-thumb paper-thumb-1 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/mountain.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
   
 </div>
 
-  </a>
-  <div class="post-card-copy">
-    <h3><a href="/2026/09/05/web/">moectf 2025-web write-up</a></h3>
-    <p>看web看得头大……遂决定先把moe25和26的wp传了再说（看tsctf的题好难/(ㄒoㄒ)/~~</p>
-    
-      <div class="meta-line meta-line--tags">
-        <span class="meta-tags">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
-
-          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/dev/">#dev</a>
-        </span>
-      </div>
-    
-    <div class="meta-line meta-line--tax">
-      <span class="meta-date">
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
-2026-09-05</span>
-      
-        <span class="meta-cat">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-
-          <a class="meta-cat-link" href="/categories/ctfer/">ctfer</a>
-        </span>
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">从零开始（？）的blog搭建</strong>
+            <em class="related-card__date">2026-08-12</em>
+          </span>
+        </a>
       
     </div>
-  </div>
-</article>
-
-    
-      
-<article class="post-card" data-title="从零开始（？）的blog搭建">
-  <a class="post-thumb-link" href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/" aria-label="从零开始（？）的blog搭建">
-    
-<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="/images/cover/notebook.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-  </a>
-  <div class="post-card-copy">
-    <h3><a href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/">从零开始（？）的blog搭建</a></h3>
-    <p>点击标题查看谢谢喵</p>
-    
-      <div class="meta-line meta-line--tags">
-        <span class="meta-tags">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
-
-          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/dev/">#dev</a>
-        </span>
-      </div>
-    
-    <div class="meta-line meta-line--tax">
-      <span class="meta-date">
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
-2026-08-12</span>
-      
-        <span class="meta-cat">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-
-          <a class="meta-cat-link" href="/categories/%E5%88%86%E7%B1%BB/">分类</a>
-        </span>
-      
-    </div>
-  </div>
-</article>
-
-    
-      
-<article class="post-card" data-title="Hello World">
-  <a class="post-thumb-link" href="/2026/08/11/hello-world/" aria-label="Hello World">
-    
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="/images/cover/port.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-  </a>
-  <div class="post-card-copy">
-    <h3><a href="/2026/08/11/hello-world/">Hello World</a></h3>
-    <p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any...</p>
-    
-    <div class="meta-line meta-line--tax">
-      <span class="meta-date">
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
-2026-08-11</span>
-      
-    </div>
-  </div>
-</article>
-
-    
-  </div>
-
-
-
-
-      
-
-
-    </section>
-    
-      <aside class="paper-sidebar paper-sidebar--left">
-  
-    
-    <section class="welcome-card">
-      <div class="welcome-thumb welcome-thumb--image" aria-hidden="true">
-        
-          <img src="/images/cover/bupt_985.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        
-      </div>
-      <p class="hello"><span class="green-dot"></span>aClosure可爱的小站喵喵</p>
-      <h1>全速YOSORO！</h1>
-      <p class="welcome-text">这里有笔者画的大饼、ctfwp（我是彩笔）、以及一些杂谈！</p>
-      <a class="welcome-cta" href="/archives/"><span>开始阅读</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-</a>
-    </section>
-  
-  
-
-  <section class="side-card recent-card" data-random-posts-limit="5" data-random-posts-url="/flatpaper-random-posts.json" data-random-posts-current="/index.html">
-    <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shuffle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-shuffle"></use></svg>
-随机文章</h2>
-    <ul class="recent-list js-random-posts">
-      
-        <li>
-          <a class="recent-item" href="/2026/09/10/moe2026_web/">
-            <strong>moectf 2026-web write-up</strong>
-            <em>2026-09-10</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/09/05/web/">
-            <strong>moectf 2025-web write-up</strong>
-            <em>2026-09-05</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/">
-            <strong>从零开始（？）的blog搭建</strong>
-            <em>2026-08-12</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/08/11/hello-world/">
-            <strong>Hello World</strong>
-            <em>2026-08-11</em>
-          </a>
-        </li>
-      
-    </ul>
   </section>
 
 
-</aside>
+      
 
+
+    </section>
     
   </main>
 
