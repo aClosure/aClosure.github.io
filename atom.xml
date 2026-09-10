@@ -36,14 +36,14 @@
     <category term="omakase" scheme="http://example.com/tags/omakase/"/>
     <category term="dev" scheme="http://example.com/tags/dev/"/>
     <content>
-      <![CDATA[<!-- more --><h2 id="1-搭建背景">1.搭建背景</h2><blockquote><p>可怜的clo酱自己看不懂moectf的wp，遂先来自己搭个blog用来以后写~~（才不是自己懒得学py和js所以先用这个摸鱼呢）~~</p></blockquote><p>clo酱要开始微笑调查的ctfer之路了！（笑）</p><p>clo酱总算要准备写点gal的杂谈在网上了！</p><p><s>clo酱 要用这个熟悉下git（）</s></p><h2 id="2-施工计划">2.施工计划</h2><pre><code> &lt;!-- more --&gt;</code></pre><ul><li><p>[ ] 上线一个分类系统~~（然后写gal杂谈摸鱼）~~</p></li><li><p>[ ] 上线用户登录的功能</p></li><li><p>[ ] 给主页加一个好看的背景图片</p></li><li><p>[ ] 内嵌一个qq音乐的播放器（问就是wyy黑，尽管自己wyy都8级了）</p></li><li><p>[ ] 给blog里头嵌入图片</p></li><li><p>[ ] 上线一个评论区</p></li><li><p>[ ] 上线一下文档发布时间</p></li><li><p>[ ] 想办法搞个看板娘</p></li><li><p>[ ] 和网友们讨token吃（）</p></li></ul><h2 id="3-施工简报">3.施工简报</h2><blockquote><p>special：感谢知乎大佬“枫叶”的文章[从零开始搭建个人博客（超详细）](<a href="https://zhuanlan.zhihu.com/p/102592286">(10 封私信) 从零开始搭建个人博客（超详细） - 知乎</a>)，省去了不少看hexo文档的工夫（谢谢喵）</p></blockquote>]]>
+      <![CDATA[<!-- more --><h2 id="1-搭建背景">1.搭建背景</h2><blockquote><p>可怜的clo酱自己看不懂moectf的wp，遂先来自己搭个blog用来以后写~~（才不是自己懒得学py和js所以先用这个摸鱼呢）~~</p></blockquote><p>clo酱要开始微笑调查的ctfer之路了！（笑）</p><p>clo酱总算要准备写点gal的杂谈在网上了！</p><p><s>clo酱 要用这个熟悉下git（）</s></p><h2 id="2-施工计划">2.施工计划</h2><pre><code> &lt;!-- more --&gt;</code></pre><ul><li><p>[ ] 上线一个分类系统~~（然后写gal杂谈摸鱼）</p></li><li><p>[ ] 给主页加一个好看的背景图片</p></li><li><p>[ ] 内嵌一个qq音乐的播放器（问就是wyy黑，尽管自己wyy都8级了）</p></li><li><p>[ ] 给blog里头嵌入图片</p></li><li><p>[ ] 上线一个评论区</p></li><li><p>[ ] 上线一下文档发布时间</p></li><li><p>[ ] 想办法搞个看板娘</p></li><li><p>[ ] 和网友们讨token吃（）</p></li></ul><h2 id="3-施工简报">3.施工简报</h2><blockquote><p>special：感谢知乎大佬“枫叶”的文章[从零开始搭建个人博客（超详细）](<a href="https://zhuanlan.zhihu.com/p/102592286">(10 封私信) 从零开始搭建个人博客（超详细） - 知乎</a>)，省去了不少看hexo文档的工夫（谢谢喵）</p></blockquote><p>2026-09-10更新：</p><p>改用了flatpaper这个主题，主题的demo见<a href="https://flatpaper.nep.me/">这里</a>。</p><p>感谢<a href="https://homulilly.com/">Homulilly的圆神博客</a>让我知道了这个主题，翻修后相比原来简陋的next真是天差地别（笑</p>]]>
     </content>
     <id>http://example.com/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/</id>
     <link href="http://example.com/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/"/>
     <published>2026-08-12T05:04:12.000Z</published>
     <summary>点击标题查看谢谢喵</summary>
     <title>从零开始（？）的blog搭建</title>
-    <updated>2026-09-05T15:14:57.264Z</updated>
+    <updated>2026-09-10T08:44:49.298Z</updated>
   </entry>
   <entry>
     <author>
