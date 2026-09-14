@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, aClosure</rights>
   <subtitle>おす～！</subtitle>
   <title>aClosure's奇妙的妙妙据点</title>
-  <updated>2026-09-10T08:56:01.387Z</updated>
+  <updated>2026-09-14T14:51:54.761Z</updated>
   <entry>
     <author>
       <name>aClosure</name>
@@ -26,7 +26,7 @@
     <published>2026-09-10T08:54:07.000Z</published>
     <summary>你很想点进来看，渴求着今年的答案，是这样吗？</summary>
     <title>moectf 2026-web write-up</title>
-    <updated>2026-09-10T08:56:01.387Z</updated>
+    <updated>2026-09-14T14:51:54.761Z</updated>
   </entry>
   <entry>
     <author>
@@ -43,13 +43,13 @@
     <published>2026-09-05T14:54:07.000Z</published>
     <summary>看web看得头大……遂决定先把moe25和26的wp传了再说（看tsctf的题好难/(ㄒoㄒ)/~~</summary>
     <title>moectf 2025-web write-up</title>
-    <updated>2026-09-10T13:09:17.914Z</updated>
+    <updated>2026-09-14T14:51:44.209Z</updated>
   </entry>
   <entry>
     <author>
       <name>aClosure</name>
     </author>
-    <category term="分类" scheme="http://example.com/categories/%E5%88%86%E7%B1%BB/"/>
+    <category term="logs" scheme="http://example.com/categories/logs/"/>
     <category term="omakase" scheme="http://example.com/tags/omakase/"/>
     <category term="dev" scheme="http://example.com/tags/dev/"/>
     <content>
@@ -60,7 +60,7 @@
     <published>2026-08-12T05:04:12.000Z</published>
     <summary>点击标题查看谢谢喵</summary>
     <title>从零开始（？）的blog搭建</title>
-    <updated>2026-09-10T13:07:27.494Z</updated>
+    <updated>2026-09-14T14:52:08.736Z</updated>
   </entry>
   <entry>
     <author>
