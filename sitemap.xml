@@ -133,13 +133,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/omakase/</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/dev/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -148,6 +141,13 @@
   
   <url>
     <loc>http://example.com/tags/OutofRes/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/omakase/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/logs/game/</loc>
+    <loc>http://example.com/categories/life/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/life/</loc>
+    <loc>http://example.com/categories/logs/game/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
