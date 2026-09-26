@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aclosure.github.io/sitemap.xml
