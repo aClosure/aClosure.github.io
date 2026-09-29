@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://aclosure.github.io/2026/09/29/gal_CloverDays/</loc>
+    
+    <lastmod>2026-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://aclosure.github.io/2026/09/26/tsctf-j-25/</loc>
     
     <lastmod>2026-09-28</lastmod>
@@ -65,15 +74,6 @@
   </url>
   
   <url>
-    <loc>https://aclosure.github.io/2026/08/19/gal_CloverDays/</loc>
-    
-    <lastmod>2026-09-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://aclosure.github.io/about/</loc>
     
     <lastmod>2026-09-10</lastmod>
@@ -121,7 +121,7 @@
 
   <url>
     <loc>https://aclosure.github.io/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
