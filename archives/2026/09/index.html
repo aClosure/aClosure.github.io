@@ -60,6 +60,37 @@
   
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   
+  <style>
+  .fp-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 30;
+    pointer-events: none;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    display: none;
+  }
+  body.is-post .fp-progress { display: block; }
+  @supports (animation-timeline: scroll()) {
+    body.is-post .fp-progress {
+      animation-name: fp-progress-grow;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+  @keyframes fp-progress-grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-progress { display: none !important; }
+  }
+</style>
+
+  
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="aClosure's奇妙的妙妙据点" type="application/atom+xml">
 </head>
 
@@ -640,6 +671,37 @@
   </script>
   
 <script src="/js/main.js"></script>
+
+  
+  <div class="fp-progress" aria-hidden="true"></div>
+  
+  <script>
+(function () {
+  var bar = document.querySelector('.fp-progress');
+  if (!bar || !document.body.classList.contains('is-post')) return;
+
+  // 原生可用就不用我们管：先看计算值，再用 CSS.supports 兜一道
+  var timeline = '';
+  try { timeline = getComputedStyle(bar).animationTimeline || ''; } catch (e) {}
+  var native = (timeline && timeline !== 'auto' && timeline !== 'none') ||
+    !!(window.CSS && CSS.supports &&
+       CSS.supports('animation-timeline', 'scroll()') &&
+       CSS.supports('animation-duration', 'auto'));
+  if (native) return;
+
+  var raf = 0;
+  function update() {
+    raf = 0;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }
+  function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+</script>
 
   
 </body>
