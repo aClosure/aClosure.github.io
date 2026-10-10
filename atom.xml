@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <author>
-    <name>aClosure</name>
+    <name>kur0sia!</name>
   </author>
   <generator uri="https://hexo.io/">Hexo</generator>
   <id>https://aclosure.github.io/</id>
   <link href="https://aclosure.github.io/" rel="alternate"/>
   <link href="https://aclosure.github.io/atom.xml" rel="self"/>
-  <rights>All rights reserved 2026, aClosure</rights>
+  <rights>All rights reserved 2026, kur0sia!</rights>
   <subtitle>おす～！</subtitle>
   <title>aClosure's奇妙的妙妙据点</title>
   <updated>2026-10-10T04:39:41.688Z</updated>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="life" scheme="https://aclosure.github.io/categories/life/"/>
     <category term="smTalk" scheme="https://aclosure.github.io/tags/smTalk/"/>
@@ -30,7 +30,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="logs" scheme="https://aclosure.github.io/categories/logs/"/>
     <category term="game" scheme="https://aclosure.github.io/categories/logs/game/"/>
@@ -48,7 +48,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="ctfer" scheme="https://aclosure.github.io/categories/ctfer/"/>
     <category term="dev" scheme="https://aclosure.github.io/tags/dev/"/>
@@ -64,7 +64,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="ctfer" scheme="https://aclosure.github.io/categories/ctfer/"/>
     <category term="dev" scheme="https://aclosure.github.io/tags/dev/"/>
@@ -80,7 +80,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="life" scheme="https://aclosure.github.io/categories/life/"/>
     <category term="OutofRes" scheme="https://aclosure.github.io/tags/OutofRes/"/>
@@ -96,7 +96,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="ctfer" scheme="https://aclosure.github.io/categories/ctfer/"/>
     <category term="dev" scheme="https://aclosure.github.io/tags/dev/"/>
@@ -112,7 +112,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="ctfer" scheme="https://aclosure.github.io/categories/ctfer/"/>
     <category term="dev" scheme="https://aclosure.github.io/tags/dev/"/>
@@ -129,7 +129,7 @@
   </entry>
   <entry>
     <author>
-      <name>aClosure</name>
+      <name>kur0sia!</name>
     </author>
     <category term="logs" scheme="https://aclosure.github.io/categories/logs/"/>
     <category term="dev" scheme="https://aclosure.github.io/tags/dev/"/>
