@@ -91,6 +91,60 @@
 </style>
 
   
+  <style>
+  .fp-bgm {
+    position: fixed;
+    left: 26px;
+    bottom: 26px;
+    z-index: 40;
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px dashed var(--dash);
+    border-radius: 50%;
+    color: var(--ink-soft);
+    background: var(--paper-warm);
+    box-shadow: 0 6px 16px rgba(var(--paper-shadow-rgb), 0.16);
+    cursor: pointer;
+    transition: color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .fp-bgm[hidden] { display: none; }
+  .fp-bgm svg { width: 18px; height: 18px; }
+  .fp-bgm:hover, .fp-bgm:focus-visible {
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent-soft);
+  }
+  .fp-bgm:active { transform: scale(.94); }
+  .fp-bgm.is-playing {
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent-muted);
+  }
+  .dark-mode .fp-bgm.is-playing { color: var(--color-accent-muted); }
+  .fp-bgm.is-playing::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+    animation: fp-bgm-pulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes fp-bgm-pulse {
+    0%   { transform: scale(1);   opacity: .75; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-bgm.is-playing::after { display: none; }
+  }
+  @media (max-width: 640px) {
+    .fp-bgm { left: 16px; bottom: 16px; width: 40px; height: 40px; }
+    .fp-bgm svg { width: 16px; height: 16px; }
+  }
+</style>
+
+  
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="aClosure's奇妙的妙妙据点" type="application/atom+xml">
 </head>
 
@@ -483,15 +537,15 @@
           <em>5</em>
         </a>
       
-        <a href="/categories/logs/">
+        <a href="/categories/life/">
           <span class="dot dot-1"></span>
-          <strong>logs</strong>
+          <strong>life</strong>
           <em>2</em>
         </a>
       
-        <a href="/categories/life/">
+        <a href="/categories/logs/">
           <span class="dot dot-2"></span>
-          <strong>life</strong>
+          <strong>logs</strong>
           <em>2</em>
         </a>
       
@@ -524,9 +578,9 @@
         
           <a class="tag-chip tag-chip-2" href="/tags/smTalk/">smTalk</a>
         
-          <a class="tag-chip tag-chip-3" href="/tags/gal/">gal</a>
+          <a class="tag-chip tag-chip-3" href="/tags/OutofRes/">OutofRes</a>
         
-          <a class="tag-chip tag-chip-4" href="/tags/OutofRes/">OutofRes</a>
+          <a class="tag-chip tag-chip-4" href="/tags/gal/">gal</a>
         
       </div>
     </section>
@@ -585,15 +639,15 @@
         </li>
       
         <li>
-          <a class="recent-item" href="/2026/10/10/tsctf-j-26/">
-            <strong>tsctf-j-26 web-write-up</strong>
+          <a class="recent-item" href="/2026/10/10/%E5%AF%B9%E4%BA%8E%E5%85%A5%E5%AD%A6%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">
+            <strong>对于入学以来的思考与总结</strong>
             <em>2026-10-10</em>
           </a>
         </li>
       
         <li>
-          <a class="recent-item" href="/2026/10/10/%E5%AF%B9%E4%BA%8E%E5%85%A5%E5%AD%A6%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">
-            <strong>对于入学以来的思考与总结</strong>
+          <a class="recent-item" href="/2026/10/10/tsctf-j-26/">
+            <strong>tsctf-j-26 web-write-up</strong>
             <em>2026-10-10</em>
           </a>
         </li>
@@ -697,6 +751,8 @@
 })();
 </script>
 
+  
+  <script src="/js/bgm-player.js" defer></script>
   
 </body>
 </html>
