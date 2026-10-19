@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aclosure.github.io/images/cover/yuri_001.webp">
 <meta property="article:published_time" content="2026-10-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-19T04:29:10.525Z">
+<meta property="article:modified_time" content="2026-10-19T04:30:41.587Z">
 <meta property="article:author" content="kur0sia!">
 <meta property="article:tag" content="dev">
 <meta property="article:tag" content="omakase">
@@ -26,7 +26,7 @@
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"10-19 一题","name":"10-19 一题 | aClosure's奇妙的妙妙据点","description":"没事干随便写写，但是笔者突然发现还有英语作业等着自己…","url":"https://aclosure.github.io/2026/10/19/10-19%20%E4%B8%80%E9%A2%98/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/yuri_001.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/10/19/10-19%20%E4%B8%80%E9%A2%98/","datePublished":"2026-10-18T16:00:00.000Z","dateModified":"2026-10-19T04:29:10.525Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev, omakase"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"10-19 一题","name":"10-19 一题 | aClosure's奇妙的妙妙据点","description":"没事干随便写写，但是笔者突然发现还有英语作业等着自己…","url":"https://aclosure.github.io/2026/10/19/10-19%20%E4%B8%80%E9%A2%98/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/yuri_001.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/10/19/10-19%20%E4%B8%80%E9%A2%98/","datePublished":"2026-10-18T16:00:00.000Z","dateModified":"2026-10-19T04:30:41.587Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev, omakase"}</script>
 
 <script>
   (function () {
@@ -610,12 +610,10 @@
 <p>笔者一开始是不理解这一堆<code>mb_substr</code> <code>mb_strpos</code> 是在干什么的，甚至连!isset判断非空差点都忘了（）后来凭借ds神力查了一下，想起来substr本身截取的作用~~（来自sql的记忆）~~，以及strpos拼接从而让正常的<code>?file=hint.php</code>通过的含义。至于那个is_string，看上去只是为了防整数和数组，没有太大用处（？</p>
 <p>言归正传，本题的weakpoint就在于这个include函数，是典型的文件包含型漏洞。我们根据提示访问hint.php，发现提示：<code>flag not here, and flag in ffffllllaaaagggg</code></p>
 <p>又注意到include的触发需要以下三个条件：file字段非空，file字段为字符串，file字段能够通过checkFile的审验（WAF），否则返回滑稽。回到对于emmm类的分析：</p>
-<details class="flatpaper-note flatpaper-note--success"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">尝试一下折叠效果，也为了你可以想想emmm类的分析喵。</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><blockquote>
-<ol>
+<details class="flatpaper-note flatpaper-note--success"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">尝试一下折叠效果，也为了你可以想想emmm类的分析喵。</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><ol>
 <li>对于page字段的check，首先是只能通过source.php和hint.php，其他的都视作非法请求予以肘击。</li>
 <li>对于_page字段的check，mb_substr从page字段的第一个字符开始切割，一直到第一个问号。但是由于mb_strpos本身拼接了一个问号，所以怎么说也会切到这里~~（但事实上变成了滚木）~~。而urldecode再次来了一遍这个流程，让我们可以开心地在浏览器的搜索栏进行这个手工文件包含。</li>
-</ol>
-</blockquote></div></details>
+</ol></div></details>
 <p>也就是说只要<code>file=hint.php</code>或者<code>source.php</code>，后面加一个问号就会被截断。但是对于linux的文件系统，在路径穿越时，<code>hint.php?</code>整体认不出来，会被直接扔掉。所以我们只要构造如下payload即可：<br>
 <code>?file=hint.php?/../../../../ffffllllaaaagggg</code></p>
 <p>但是为什么我要用这个雷霆头图？</p>
