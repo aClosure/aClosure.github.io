@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aclosure.github.io/images/cover/06.webp">
 <meta property="article:published_time" content="2026-10-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-22T13:22:26.644Z">
+<meta property="article:modified_time" content="2026-10-22T13:39:38.497Z">
 <meta property="article:author" content="kur0sia!">
 <meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
@@ -25,7 +25,7 @@
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-26 web-write-up","name":"tsctf-j-26 web-write-up | aClosure's奇妙的妙妙据点","description":"笔者看到了萧垣大人发的飞书，信心大增，决定不管怎么样先写几道题再说。","url":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","datePublished":"2026-10-09T16:00:00.000Z","dateModified":"2026-10-22T13:22:26.644Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-26 web-write-up","name":"tsctf-j-26 web-write-up | aClosure's奇妙的妙妙据点","description":"笔者看到了萧垣大人发的飞书，信心大增，决定不管怎么样先写几道题再说。","url":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","datePublished":"2026-10-09T16:00:00.000Z","dateModified":"2026-10-22T13:39:38.497Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
 
 <script>
   (function () {
@@ -795,6 +795,8 @@
 <p>  本文件同时作为提交的 Writeup 和个人笔记。有未尽之处实属抱歉，<s>因为我能在排行榜中取得名次多亏了 dsh的禁忌力量。</s></p>
 <p>看上去最近得去学正则和js了，不然前端看着真的难受（泣</p>
 <p>以及感谢来自poe大人的致谢参考尾段，和来自神秘小游戏《放松时光：与你共享Lo-Fi故事》的satone酱的亲切陪伴。（为什么聪音都会看日志但是我不会😭</p>
+<p>!(&lt;/images/rt/tsctf-j-26/new/satone.png&gt;)<br>
+– 10-22更新：写更新的时候，笔者恰好闲来无事更新了声卡驱动，然后喜提超绝电流白噪音，以为自己被来自DDLC的monika制裁了，在此敬告大家不要干这种事😭</p>
 
   </div>
 
@@ -837,18 +839,18 @@
 
   <nav class="article-actions">
     
-      <a class="article-action article-action--prev" href="/2026/10/10/%E5%AF%B9%E4%BA%8E%E5%85%A5%E5%AD%A6%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">
+      <a class="article-action article-action--prev" href="/2026/10/16/moe2026_web/">
         
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
 
         <span class="action-label">上一篇</span>
-        <span class="action-title">对于入学以来的思考与总结</span>
+        <span class="action-title">moectf 2026-web write-up</span>
       </a>
     
     
-      <a class="article-action article-action--next" href="/2026/09/29/gal_CloverDays/">
+      <a class="article-action article-action--next" href="/2026/10/10/%E5%AF%B9%E4%BA%8E%E5%85%A5%E5%AD%A6%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">
         <span class="action-label">下一篇</span>
-        <span class="action-title">Clover Days(占位标题)</span>
+        <span class="action-title">对于入学以来的思考与总结</span>
         
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
 
