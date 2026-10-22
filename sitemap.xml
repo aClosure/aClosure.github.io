@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://aclosure.github.io/2026/10/10/tsctf-j-26/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://aclosure.github.io/2026/10/20/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/</loc>
     
     <lastmod>2026-10-20</lastmod>
@@ -50,15 +59,6 @@
     <loc>https://aclosure.github.io/2026/10/16/moe2026_web/</loc>
     
     <lastmod>2026-10-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://aclosure.github.io/2026/10/10/tsctf-j-26/</loc>
-    
-    <lastmod>2026-10-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -184,7 +184,7 @@
 
   <url>
     <loc>https://aclosure.github.io/</loc>
-    <lastmod>2026-10-20</lastmod>
+    <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>

