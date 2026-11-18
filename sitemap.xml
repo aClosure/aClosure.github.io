@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://aclosure.github.io/2026/11/18/ctfgame/%E6%9D%A5%E8%87%AAgeek%E7%9A%84ssti/</loc>
+    
+    <lastmod>2026-11-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://aclosure.github.io/2026/11/15/daily/%E9%9D%9E%E4%BE%8B%E8%A1%8C%E6%9B%B4%E6%96%B0%E7%9A%84%E6%91%B8%E9%B1%BC%E8%AE%B0%E8%AE%B0/</loc>
     
     <lastmod>2026-11-15</lastmod>
@@ -256,7 +265,7 @@
 
   <url>
     <loc>https://aclosure.github.io/</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
