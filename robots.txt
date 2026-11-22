@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aclosure.github.io/sitemap.xml
+Sitemap: https://kur0sia.space/sitemap.xml

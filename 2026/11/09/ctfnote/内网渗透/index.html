@@ -10,22 +10,22 @@
 <meta name="description" content="拆分后的XXE知识库，目前还只是基本啥也没有的ai slop，建议去看hello-ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="敏感信息泄露 | aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:url" content="https://aclosure.github.io/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+<meta property="og:url" content="https://kur0sia.space/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
 <meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
 <meta property="og:description" content="拆分后的XXE知识库，目前还只是基本啥也没有的ai slop，建议去看hello-ctf">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aclosure.github.io/images/cover/yuri_001.webp">
+<meta property="og:image" content="https://kur0sia.space/images/cover/yuri_001.webp">
 <meta property="article:published_time" content="2026-11-09T12:44:03.000Z">
 <meta property="article:modified_time" content="2026-11-09T12:45:48.369Z">
 <meta property="article:author" content="kur0sia!">
 <meta property="article:tag" content="dev">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://aclosure.github.io/images/cover/yuri_001.webp">
-<link rel="canonical" href="https://aclosure.github.io/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+<meta name="twitter:image" content="https://kur0sia.space/images/cover/yuri_001.webp">
+<link rel="canonical" href="https://kur0sia.space/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"敏感信息泄露","name":"敏感信息泄露 | aClosure's奇妙的妙妙据点","description":"拆分后的XXE知识库，目前还只是基本啥也没有的ai slop，建议去看hello-ctf","url":"https://aclosure.github.io/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"image":["https://aclosure.github.io/images/cover/yuri_001.webp"],"mainEntityOfPage":"https://aclosure.github.io/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/","datePublished":"2026-11-09T12:44:03.000Z","dateModified":"2026-11-09T12:45:48.369Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"敏感信息泄露","name":"敏感信息泄露 | aClosure's奇妙的妙妙据点","description":"拆分后的XXE知识库，目前还只是基本啥也没有的ai slop，建议去看hello-ctf","url":"https://kur0sia.space/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://kur0sia.space/"},"image":["https://kur0sia.space/images/cover/yuri_001.webp"],"mainEntityOfPage":"https://kur0sia.space/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/","datePublished":"2026-11-09T12:44:03.000Z","dateModified":"2026-11-09T12:45:48.369Z","author":{"@type":"Person","name":"kur0sia!"},"publisher":{"@type":"Organization","name":"aClosure's奇妙的妙妙据点"},"keywords":"dev"}</script>
 
 <script>
   (function () {
@@ -42,6 +42,17 @@
         document.documentElement.classList.add('dark-mode');
       }
     } catch (e) {}
+    // Reveal-on-scroll opts in from here so it is applied before first paint
+    // (no flash) and never applies without JS. If main.js never runs the
+    // observer, the timeout drops the class again so nothing stays hidden.
+    if ('IntersectionObserver' in window) {
+      document.documentElement.classList.add('reveal-ready');
+      setTimeout(function () {
+        if (!window.flatpaperRevealReady) {
+          document.documentElement.classList.remove('reveal-ready');
+        }
+      }, 2000);
+    }
   })();
 </script>
 
@@ -64,6 +75,62 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
 <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
+
+  
+  <script>
+(function () {
+  var key = 'flatpaper-mode';
+  var root = document.documentElement;
+  var media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  var meta = document.querySelector('meta[data-flatpaper-theme-color]');
+  var manual = readMode();
+
+  function readMode() {
+    try {
+      var value = localStorage.getItem(key);
+      if (value === 'dark' || value === 'light') return value;
+    } catch (e) {}
+    return null;
+  }
+  function sync() {
+    var dark = manual ? manual === 'dark' : !!(media && media.matches);
+    root.classList.toggle('dark-mode', dark);
+    if (meta) meta.content = dark ? '#15171c' : '#f7f3e9';
+    var box = document.getElementById('fp-system-mode');
+    if (box) box.checked = !manual;
+  }
+  sync();
+  if (media && media.addEventListener) media.addEventListener('change', sync);
+  else if (media && media.addListener) media.addListener(sync);
+  window.addEventListener('storage', function (e) {
+    if (e.key !== key && e.key !== null) return;
+    manual = readMode();
+    sync();
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var label = document.getElementById('fp-system-label');
+    var box = document.getElementById('fp-system-mode');
+    if (media && label && box) {
+      label.hidden = false;
+      box.addEventListener('change', function () {
+        manual = box.checked ? null : (root.classList.contains('dark-mode') ? 'dark' : 'light');
+        try {
+          if (manual) localStorage.setItem(key, manual);
+          else localStorage.removeItem(key);
+        } catch (e) {}
+        sync();
+      });
+    }
+    // FlatPaper 已处理按钮切换和保存，这里只同步手动状态。
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.theme-toggle')) return;
+      manual = root.classList.contains('dark-mode') ? 'dark' : 'light';
+      sync();
+    });
+    sync();
+  });
+})();
+</script>
 
   
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
@@ -99,59 +166,7 @@
 </style>
 
   
-  <style>
-  .fp-bgm {
-    position: fixed;
-    left: 26px;
-    bottom: 26px;
-    z-index: 40;
-    display: inline-grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 1px dashed var(--dash);
-    border-radius: 50%;
-    color: var(--ink-soft);
-    background: var(--paper-warm);
-    box-shadow: 0 6px 16px rgba(var(--paper-shadow-rgb), 0.16);
-    cursor: pointer;
-    transition: color .2s ease, border-color .2s ease, transform .2s ease;
-  }
-  .fp-bgm[hidden] { display: none; }
-  .fp-bgm svg { width: 18px; height: 18px; }
-  .fp-bgm:hover, .fp-bgm:focus-visible {
-    color: var(--color-accent-strong);
-    border-color: var(--color-accent-soft);
-  }
-  .fp-bgm:active { transform: scale(.94); }
-  .fp-bgm.is-playing {
-    color: var(--color-accent-strong);
-    border-color: var(--color-accent-muted);
-  }
-  .dark-mode .fp-bgm.is-playing { color: var(--color-accent-muted); }
-  .fp-bgm.is-playing::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 50%;
-    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
-    animation: fp-bgm-pulse 2.4s ease-out infinite;
-    pointer-events: none;
-  }
-  @keyframes fp-bgm-pulse {
-    0%   { transform: scale(1);   opacity: .75; }
-    100% { transform: scale(1.4); opacity: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .fp-bgm.is-playing::after { display: none; }
-  }
-  @media (max-width: 640px) {
-    .fp-bgm { left: 16px; bottom: 16px; width: 40px; height: 40px; }
-    .fp-bgm svg { width: 16px; height: 16px; }
-  }
-</style>
-
+  <link rel="stylesheet" href="/css/bgm-player.css">
   
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="aClosure's奇妙的妙妙据点" type="application/atom+xml">
 </head>
@@ -165,9 +180,6 @@
   data-button-style="circle"
   data-strong-accent="on"
 >
-  
-    <div class="page-grain"></div>
-  
   <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
     <defs>
       <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
@@ -219,12 +231,35 @@
       
     
       
-        <a class="site-nav-link " href="/fcircle/">
-          
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>社群</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/fcircle/">
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-users"></use></svg>
 
-          <span>朋友圈</span>
-        </a>
+                  <span>实践部</span>
+                </span>
+              </a>
+            
+              <a role="menuitem" class="" href="/board/">
+                <span class="nav-label">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+                  <span>留言板</span>
+                </span>
+              </a>
+            
+          </div>
+        </div>
       
     
       
@@ -247,24 +282,30 @@
           <div class="site-nav-menu" role="menu">
             
               <a role="menuitem" class="" href="/categories/">
-                
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
 
-                <span>分类</span>
+                  <span>分类</span>
+                </span>
               </a>
             
               <a role="menuitem" class="" href="/tags/">
-                
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
 
-                <span>标签</span>
+                  <span>标签</span>
+                </span>
               </a>
             
               <a role="menuitem" class="" href="/archives/">
-                
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
 
-                <span>归档</span>
+                  <span>归档</span>
+                </span>
               </a>
             
           </div>
@@ -379,12 +420,31 @@
         
       
         
-          <a class="" href="/fcircle/">
-            
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>社群</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/fcircle/">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-users"></use></svg>
 
-            <span>朋友圈</span>
-          </a>
+                  <span>实践部</span>
+                </a>
+              
+                <a class="" href="/board/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+                  <span>留言板</span>
+                </a>
+              
+            </div>
+          </div>
         
       
         
@@ -434,7 +494,7 @@
     </nav>
   </section>
 
-  <section class="side-card profile-card">
+  <section class="side-card profile-card reveal">
     
       <div class="avatar avatar--image avatar--circle">
         <img src="/images/avatar.jpg" alt="kur0sia!" loading="lazy" referrerpolicy="no-referrer">
@@ -499,14 +559,6 @@
           
             
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 496 512" fill="currentColor" class="lucide lucide-steam flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-steam"></use></svg>
-
-          
-        </a>
-      
-        <a href="https://weibo.com/u/7733852433" target="_blank" rel="noopener" aria-label="Weibo" data-tooltip="Weibo">
-          
-            
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" class="lucide lucide-weibo flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-weibo"></use></svg>
 
           
         </a>
@@ -714,20 +766,14 @@
   <nav class="article-actions">
     
       <a class="article-action article-action--prev" href="/2026/11/15/daily/%E9%9D%9E%E4%BE%8B%E8%A1%8C%E6%9B%B4%E6%96%B0%E7%9A%84%E6%91%B8%E9%B1%BC%E8%AE%B0%E8%AE%B0/">
-        
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
-
         <span class="action-label">上一篇</span>
-        <span class="action-title">非例行更新的摸鱼记记</span>
+        <span class="action-title"><span class="marker-swipe">非例行更新的摸鱼记记</span></span>
       </a>
     
     
       <a class="article-action article-action--next" href="/2026/11/09/ctfnote/%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">
         <span class="action-label">下一篇</span>
-        <span class="action-title">敏感信息泄露</span>
-        
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-
+        <span class="action-title"><span class="marker-swipe">敏感信息泄露</span></span>
       </a>
     
   </nav>
@@ -747,10 +793,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
 相关文章</h2>
       <a class="related-paper__more" href="/archives/">
-        <span>查看更多</span>
-        
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-
+        <span class="marker-swipe">查看更多</span>
       </a>
     </header>
     <div class="related-paper__grid">
@@ -766,7 +809,7 @@
 
           </span>
           <span class="related-card__body">
-            <strong class="related-card__title">来自geek的SSTI例题</strong>
+            <strong class="related-card__title"><span class="marker-swipe">来自geek的SSTI例题</span></strong>
             <em class="related-card__date">2026-11-18</em>
           </span>
         </a>
@@ -782,7 +825,7 @@
 
           </span>
           <span class="related-card__body">
-            <strong class="related-card__title">敏感信息泄露</strong>
+            <strong class="related-card__title"><span class="marker-swipe">敏感信息泄露</span></strong>
             <em class="related-card__date">2026-11-09</em>
           </span>
         </a>
@@ -798,7 +841,7 @@
 
           </span>
           <span class="related-card__body">
-            <strong class="related-card__title">WP-第17届极客大挑战</strong>
+            <strong class="related-card__title"><span class="marker-swipe">WP-第17届极客大挑战</span></strong>
             <em class="related-card__date">2026-11-05</em>
           </span>
         </a>
@@ -814,7 +857,7 @@
 
           </span>
           <span class="related-card__body">
-            <strong class="related-card__title">文件上传</strong>
+            <strong class="related-card__title"><span class="marker-swipe">文件上传</span></strong>
             <em class="related-card__date">2026-11-02</em>
           </span>
         </a>
@@ -885,11 +928,11 @@
 
   
 <footer class="site-footer">
-  <span class="site-footer__left">© 奇妙的喵喵据点 By kur0sia!</span>
+  <span class="site-footer__left">© 奇妙的喵喵据点 By kur0sia! <label hidden id="fp-system-label"><input type="checkbox" id="fp-system-mode"> 跟随系统配色</label></span>
   
     <span class="site-footer__right">
       
-        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+        <span class="site-footer__row"><span class="site-footer__powered"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span></span>
       
     </span>
   
@@ -921,7 +964,7 @@
 </div>
 
   <script>
-  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","typed.from":"出自","reward_list.total":"共 %s 人","reward_list.updated":"最新更新时间：","stack_album.label":"堆叠相册","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
   </script>
   
 <script src="/js/main.js"></script>

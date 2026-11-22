@@ -7,20 +7,20 @@
 <meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
 
 <title>aClosure&#39;s奇妙的妙妙据点</title>
-<meta name="description" content="aClosure&#39;s奇妙的妙妙据点收录 21 篇文章，包括来自geek的SSTI例题、非例行更新的摸鱼记记、敏感信息泄露。">
+<meta name="description" content="aClosure&#39;s奇妙的妙妙据点收录 21 篇文章，包括blog近期的更新和规划！、来自geek的SSTI例题、非例行更新的摸鱼记记。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:url" content="https://aclosure.github.io/">
+<meta property="og:url" content="https://kur0sia.space/">
 <meta property="og:site_name" content="aClosure&#39;s奇妙的妙妙据点">
-<meta property="og:description" content="aClosure&#39;s奇妙的妙妙据点收录 21 篇文章，包括来自geek的SSTI例题、非例行更新的摸鱼记记、敏感信息泄露。">
+<meta property="og:description" content="aClosure&#39;s奇妙的妙妙据点收录 21 篇文章，包括blog近期的更新和规划！、来自geek的SSTI例题、非例行更新的摸鱼记记。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="kur0sia!">
 <meta name="twitter:card" content="summary">
-<link rel="canonical" href="https://aclosure.github.io/">
+<link rel="canonical" href="https://kur0sia.space/">
 
 <link rel="icon" href="/images/Ak_char_007_closre_3.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","headline":"aClosure's奇妙的妙妙据点","name":"aClosure's奇妙的妙妙据点","description":"aClosure's奇妙的妙妙据点收录 21 篇文章，包括来自geek的SSTI例题、非例行更新的摸鱼记记、敏感信息泄露。","url":"https://aclosure.github.io/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://aclosure.github.io/"},"about":"aClosure's奇妙的妙妙据点"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","headline":"aClosure's奇妙的妙妙据点","name":"aClosure's奇妙的妙妙据点","description":"aClosure's奇妙的妙妙据点收录 21 篇文章，包括blog近期的更新和规划！、来自geek的SSTI例题、非例行更新的摸鱼记记。","url":"https://kur0sia.space/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"aClosure's奇妙的妙妙据点","url":"https://kur0sia.space/"},"about":"aClosure's奇妙的妙妙据点"}</script>
 
 <script>
   (function () {
@@ -37,6 +37,17 @@
         document.documentElement.classList.add('dark-mode');
       }
     } catch (e) {}
+    // Reveal-on-scroll opts in from here so it is applied before first paint
+    // (no flash) and never applies without JS. If main.js never runs the
+    // observer, the timeout drops the class again so nothing stays hidden.
+    if ('IntersectionObserver' in window) {
+      document.documentElement.classList.add('reveal-ready');
+      setTimeout(function () {
+        if (!window.flatpaperRevealReady) {
+          document.documentElement.classList.remove('reveal-ready');
+        }
+      }, 2000);
+    }
   })();
 </script>
 
@@ -56,6 +67,62 @@
   
 
   
+
+  
+  <script>
+(function () {
+  var key = 'flatpaper-mode';
+  var root = document.documentElement;
+  var media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  var meta = document.querySelector('meta[data-flatpaper-theme-color]');
+  var manual = readMode();
+
+  function readMode() {
+    try {
+      var value = localStorage.getItem(key);
+      if (value === 'dark' || value === 'light') return value;
+    } catch (e) {}
+    return null;
+  }
+  function sync() {
+    var dark = manual ? manual === 'dark' : !!(media && media.matches);
+    root.classList.toggle('dark-mode', dark);
+    if (meta) meta.content = dark ? '#15171c' : '#f7f3e9';
+    var box = document.getElementById('fp-system-mode');
+    if (box) box.checked = !manual;
+  }
+  sync();
+  if (media && media.addEventListener) media.addEventListener('change', sync);
+  else if (media && media.addListener) media.addListener(sync);
+  window.addEventListener('storage', function (e) {
+    if (e.key !== key && e.key !== null) return;
+    manual = readMode();
+    sync();
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var label = document.getElementById('fp-system-label');
+    var box = document.getElementById('fp-system-mode');
+    if (media && label && box) {
+      label.hidden = false;
+      box.addEventListener('change', function () {
+        manual = box.checked ? null : (root.classList.contains('dark-mode') ? 'dark' : 'light');
+        try {
+          if (manual) localStorage.setItem(key, manual);
+          else localStorage.removeItem(key);
+        } catch (e) {}
+        sync();
+      });
+    }
+    // FlatPaper 已处理按钮切换和保存，这里只同步手动状态。
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.theme-toggle')) return;
+      manual = root.classList.contains('dark-mode') ? 'dark' : 'light';
+      sync();
+    });
+    sync();
+  });
+})();
+</script>
 
   
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
@@ -91,59 +158,7 @@
 </style>
 
   
-  <style>
-  .fp-bgm {
-    position: fixed;
-    left: 26px;
-    bottom: 26px;
-    z-index: 40;
-    display: inline-grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 1px dashed var(--dash);
-    border-radius: 50%;
-    color: var(--ink-soft);
-    background: var(--paper-warm);
-    box-shadow: 0 6px 16px rgba(var(--paper-shadow-rgb), 0.16);
-    cursor: pointer;
-    transition: color .2s ease, border-color .2s ease, transform .2s ease;
-  }
-  .fp-bgm[hidden] { display: none; }
-  .fp-bgm svg { width: 18px; height: 18px; }
-  .fp-bgm:hover, .fp-bgm:focus-visible {
-    color: var(--color-accent-strong);
-    border-color: var(--color-accent-soft);
-  }
-  .fp-bgm:active { transform: scale(.94); }
-  .fp-bgm.is-playing {
-    color: var(--color-accent-strong);
-    border-color: var(--color-accent-muted);
-  }
-  .dark-mode .fp-bgm.is-playing { color: var(--color-accent-muted); }
-  .fp-bgm.is-playing::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 50%;
-    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
-    animation: fp-bgm-pulse 2.4s ease-out infinite;
-    pointer-events: none;
-  }
-  @keyframes fp-bgm-pulse {
-    0%   { transform: scale(1);   opacity: .75; }
-    100% { transform: scale(1.4); opacity: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .fp-bgm.is-playing::after { display: none; }
-  }
-  @media (max-width: 640px) {
-    .fp-bgm { left: 16px; bottom: 16px; width: 40px; height: 40px; }
-    .fp-bgm svg { width: 16px; height: 16px; }
-  }
-</style>
-
+  <link rel="stylesheet" href="/css/bgm-player.css">
   
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="aClosure's奇妙的妙妙据点" type="application/atom+xml">
 </head>
@@ -157,9 +172,6 @@
   data-button-style="circle"
   data-strong-accent="on"
 >
-  
-    <div class="page-grain"></div>
-  
   <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
     <defs>
       <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
@@ -172,11 +184,31 @@
     
 
 <section
-  class="home-hero home-hero--image home-hero--mobile-image has-draggable-stickers"
+  class="home-hero home-hero--image home-hero--mobile-image home-hero--progressive has-draggable-stickers"
   aria-label="首页开屏"
   style="--hero-bg-image: url(&quot;/images/cover/bupt_985.jpg&quot;); --hero-image-overlay-top: rgba(42, 33, 22, 0.2); --hero-image-overlay-bottom: rgba(42, 33, 22, 0.2);"
   data-hero-images="[&#34;/images/cover/bupt_985.jpg&#34;,&#34;/images/cover/bupt_lake_1.webp&#34;,&#34;/images/cover/miku_1.jpg&#34;]"
 >
+  
+    <div class="home-hero__media" aria-hidden="true"></div>
+  
+  
+    <div class="hero-lqip" hidden aria-hidden="true"></div>
+    <script>
+      // The placeholder only earns its keep if it is painted from the first
+      // frame, so it is unhidden here rather than from main.js — and only ever
+      // when JS is running to fade it out again. If main.js never gets to it,
+      // the timeout hides it back so it cannot sit on top of the photo.
+      (function () {
+        var el = document.currentScript && document.currentScript.previousElementSibling;
+        if (!el) return;
+        el.hidden = false;
+        setTimeout(function () {
+          if (!window.flatpaperHeroProgressive) el.hidden = true;
+        }, 2000);
+      })();
+    </script>
+  
   <div class="home-hero__grain" aria-hidden="true"></div>
   <div class="home-hero__tools" aria-label="开屏工具">
     
@@ -207,6 +239,17 @@
         ><span>“可以试着拖动！”</span></button>
       
       
+        
+          <button
+            type="button"
+            class="hero-sticker hero-sticker--custom hero-sticker--custom-0"
+            data-hero-sticker="custom-0"
+            aria-hidden="true"
+            tabindex="-1"
+            style="--sticker-size: 96px;"
+          ><img src="/images/stickers/kur0sia.jpg" alt="" loading="lazy" decoding="async" draggable="false" referrerpolicy="no-referrer"></button>
+        
+      
     </div>
   
 
@@ -217,9 +260,150 @@
           <img src="/images/avatar.jpg" alt="kur0sia!" loading="eager" referrerpolicy="no-referrer">
         </div>
       
-      <p class="home-hero__eyebrow"><span class="green-dot"></span>点进来不看真的会伤心喵😭</p>
+      <p class="home-hero__eyebrow"><span class="green-dot"></span>没什么，只是想让你知道……</p>
       <h1>aClosure&#39;s奇妙的喵喵据点</h1>
-      <p class="home-hero__bio">Ciallo～(∠・ω&lt; )⌒★</p>
+      
+        
+        <p class="home-hero__bio">
+
+
+
+<span class="typed-stack"><span class="typed-stack__live"><span class="home-hero__typed" id="home-hero-type-tips"></span></span><span class="typed-stack__ghost" aria-hidden="true">绝赞开张中！|</span></span>
+
+<script>
+(function () {
+  var el = document.getElementById("home-hero-type-tips");
+  if (!el) return;
+  var sub = ["绝赞开张中！"];
+  var source = 0;
+  var effect = true;
+  var loop = true;
+  var startDelay = 300;
+  var typeSpeed = 150;
+  var backSpeed = 50;
+  var cdn = "https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js";
+  var fromLabel = "出自";
+
+  // One shared loader per page: footer and hero can both enable the
+  // typewriter, and they must not each request Typed.js.
+  var loader = window.flatpaperLoadTyped;
+  if (!loader) {
+    loader = window.flatpaperLoadTyped = function (src, done) {
+      var state = loader._state || (loader._state = { status: 0, waiting: [] });
+      if (typeof Typed !== 'undefined') { done(true); return; }
+      if (state.status === 2) { done(false); return; }
+      state.waiting.push(done);
+      if (state.status === 1) return;
+      state.status = 1;
+      var settled = false;
+      function settle(ok) {
+        if (settled) return;
+        settled = true;
+        state.status = ok ? 0 : 2;
+        var queue = state.waiting;
+        state.waiting = [];
+        for (var i = 0; i < queue.length; i++) queue[i](ok && typeof Typed !== 'undefined');
+      }
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = function () { settle(true); };
+      // A failed CDN must not leave the caller waiting: onerror settles as a
+      // failure, and the timeout covers a request that never resolves at all.
+      s.onerror = function () { settle(false); };
+      setTimeout(function () { settle(false); }, 6000);
+      (document.body || document.documentElement).appendChild(s);
+    };
+  }
+
+  // `reserve` mode: keep one invisible copy of each string that will actually
+  // be shown (a fetched quote is only known here), replacing the server ones.
+  function hold(strings) {
+    var live = el.parentNode;
+    var stack = live && live.parentNode;
+    if (!stack || !stack.classList || !stack.classList.contains('typed-stack')) return;
+    var old = stack.querySelectorAll('.typed-stack__ghost');
+    for (var i = 0; i < old.length; i++) stack.removeChild(old[i]);
+    for (var j = 0; j < strings.length; j++) {
+      var ghost = document.createElement('span');
+      ghost.className = 'typed-stack__ghost';
+      ghost.setAttribute('aria-hidden', 'true');
+      ghost.textContent = strings[j] + '|';
+      stack.appendChild(ghost);
+    }
+  }
+
+  // Without Typed.js (disabled, blocked CDN or timeout) the first string is
+  // still shown as plain text, so the slot is never left empty.
+  function render(strings) {
+    var list = [];
+    for (var i = 0; i < strings.length; i++) {
+      if (strings[i] != null && String(strings[i]) !== '') list.push(String(strings[i]));
+    }
+    if (!list.length) return;
+    if (!effect) { hold([list[0]]); el.textContent = list[0]; return; }
+    hold(list);
+    loader(cdn, function (ready) {
+      if (!ready) { hold([list[0]]); el.textContent = list[0]; return; }
+      new Typed(el, {
+        strings: list,
+        startDelay: startDelay,
+        typeSpeed: typeSpeed,
+        backSpeed: backSpeed,
+        loop: loop
+      });
+    });
+  }
+
+  function withQuote(quote, from) {
+    var strings = sub.slice();
+    if (quote) {
+      if (from) strings.unshift(fromLabel + ' ' + from);
+      strings.unshift(quote);
+    }
+    render(strings);
+  }
+
+  // Quote providers are plain <script> endpoints; a failure here only means
+  // falling back to the configured `sub` list.
+  function loadOnce(src, done) {
+    var settled = false;
+    function settle(ok) { if (!settled) { settled = true; done(ok); } }
+    var s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onload = function () { settle(true); };
+    s.onerror = function () { settle(false); };
+    setTimeout(function () { settle(false); }, 6000);
+    (document.body || document.documentElement).appendChild(s);
+  }
+
+  if (source === 1) {
+    fetch('https://v1.hitokoto.cn')
+      .then(function (r) { return r.json(); })
+      .then(function (data) { withQuote(data && data.hitokoto, data && data.from); })
+      .catch(function () { render(sub); });
+  } else if (source === 2) {
+    loadOnce('https://yijuzhan.com/api/word.php?m=js', function (ok) {
+      if (ok && typeof str !== 'undefined' && str && str[0]) withQuote(str[0], str[1]);
+      else render(sub);
+    });
+  } else if (source === 3) {
+    loadOnce('https://sdk.jinrishici.com/v2/browser/jinrishici.js', function (ok) {
+      if (!ok || typeof jinrishici === 'undefined' || !jinrishici.load) { render(sub); return; }
+      jinrishici.load(function (result) {
+        withQuote(result && result.data && result.data.content, '');
+      });
+    });
+  } else {
+    render(sub);
+  }
+
+})();
+</script>
+
+</p>
+      
       
       
         <nav class="home-hero__nav" aria-label="开屏导航">
@@ -268,14 +452,6 @@
             
           </a>
         
-          <a href="https://weibo.com/u/7733852433" target="_blank" rel="noopener" aria-label="Weibo" data-tooltip="Weibo">
-            
-              
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" class="lucide lucide-weibo flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-weibo"></use></svg>
-
-            
-          </a>
-        
           <a href="https://user.qzone.qq.com/3131474973/infocenter" target="_blank" rel="noopener" aria-label="Mastodon" data-tooltip="在 QQ 找我!">
             
               
@@ -296,17 +472,24 @@
       </div>
     </div>
   </div>
-  <a
-    class="home-hero__arrow"
-    href="#flatpaper-home-content"
-    data-hero-scroll
+  
+    <a
+      class="home-hero__arrow home-hero__arrow--paper"
+      href="#flatpaper-home-content"
+      data-hero-scroll
+      data-cta-preset="01"
+      
+      
+      
+      aria-label="开始阅读"
+      title="开始阅读"
+    >
+      <span class="home-hero__arrow-sticker" aria-hidden="true"></span>
+      <span class="home-hero__arrow-text">开始阅读</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide home-hero__arrow-icon" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+    </a>
     
-    style="--hero-cta-bg: url(&quot;/images/home/cta/webp/cta-bg-01.webp&quot;);"
-    aria-label="开始阅读"
-    title="开始阅读"
-  >
-    <span class="home-hero__arrow-text">开始阅读</span>
-  </a>
+  
 </section>
 
   
@@ -352,12 +535,35 @@
       
     
       
-        <a class="site-nav-link " href="/fcircle/">
-          
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>社群</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/fcircle/">
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-users"></use></svg>
 
-          <span>朋友圈</span>
-        </a>
+                  <span>实践部</span>
+                </span>
+              </a>
+            
+              <a role="menuitem" class="" href="/board/">
+                <span class="nav-label">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+                  <span>留言板</span>
+                </span>
+              </a>
+            
+          </div>
+        </div>
       
     
       
@@ -380,24 +586,30 @@
           <div class="site-nav-menu" role="menu">
             
               <a role="menuitem" class="" href="/categories/">
-                
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
 
-                <span>分类</span>
+                  <span>分类</span>
+                </span>
               </a>
             
               <a role="menuitem" class="" href="/tags/">
-                
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
 
-                <span>标签</span>
+                  <span>标签</span>
+                </span>
               </a>
             
               <a role="menuitem" class="" href="/archives/">
-                
+                <span class="nav-label">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
 
-                <span>归档</span>
+                  <span>归档</span>
+                </span>
               </a>
             
           </div>
@@ -512,12 +724,31 @@
         
       
         
-          <a class="" href="/fcircle/">
-            
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>社群</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/fcircle/">
+                  
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-users"></use></svg>
 
-            <span>朋友圈</span>
-          </a>
+                  <span>实践部</span>
+                </a>
+              
+                <a class="" href="/board/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+                  <span>留言板</span>
+                </a>
+              
+            </div>
+          </div>
         
       
         
@@ -567,7 +798,7 @@
     </nav>
   </section>
 
-  <section class="side-card profile-card">
+  <section class="side-card profile-card reveal">
     
       <div class="avatar avatar--image avatar--circle">
         <img src="/images/avatar.jpg" alt="kur0sia!" loading="lazy" referrerpolicy="no-referrer">
@@ -636,14 +867,6 @@
           
         </a>
       
-        <a href="https://weibo.com/u/7733852433" target="_blank" rel="noopener" aria-label="Weibo" data-tooltip="Weibo">
-          
-            
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" fill="currentColor" class="lucide lucide-weibo flatpaper-icon flatpaper-icon--fa-brands" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-fa-brands-weibo"></use></svg>
-
-          
-        </a>
-      
         <a href="https://user.qzone.qq.com/3131474973/infocenter" target="_blank" rel="noopener" aria-label="Mastodon" data-tooltip="在 QQ 找我!">
           
             
@@ -667,47 +890,49 @@
   
 
   
-    <section class="side-card categories-card">
-      <h2>
+    <section class="side-card categories-card reveal">
+      <header class="side-card__head">
+        <h2>
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
 分类</h2>
-      
-        <a href="/categories/logs/">
-          <span class="dot dot-0"></span>
-          <strong>logs</strong>
-          <em>3</em>
+        <a class="side-card__more" href="/categories/">
+          <span class="marker-swipe">查看全部</span>
         </a>
+      </header>
       
         <a href="/categories/ctfer/">
-          <span class="dot dot-1"></span>
-          <strong>ctfer</strong>
+          <span class="dot dot-0"></span>
+          <strong><span class="marker-swipe">ctfer</span></strong>
           <em>14</em>
+        </a>
+      
+        <a href="/categories/logs/">
+          <span class="dot dot-1"></span>
+          <strong><span class="marker-swipe">logs</span></strong>
+          <em>3</em>
         </a>
       
         <a href="/categories/logs/game/">
           <span class="dot dot-2"></span>
-          <strong>game</strong>
+          <strong><span class="marker-swipe">game</span></strong>
           <em>1</em>
         </a>
       
         <a href="/categories/life/">
           <span class="dot dot-3"></span>
-          <strong>life</strong>
+          <strong><span class="marker-swipe">life</span></strong>
           <em>4</em>
         </a>
       
     </section>
 
-    <section class="side-card tag-card">
-      <header class="tag-card__head">
+    <section class="side-card tag-card reveal">
+      <header class="side-card__head tag-card__head">
         <h2>
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-flame"></use></svg>
 热门标签</h2>
-        <a class="tag-card__more" href="/tags/">
-          <span>查看全部</span>
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-
+        <a class="side-card__more tag-card__more" href="/tags/">
+          <span class="marker-swipe">查看全部</span>
         </a>
       </header>
       <div class="tag-cloud">
@@ -738,7 +963,7 @@
 
 
   <section
-    class="featured-carousel has-multiple"
+    class="featured-carousel reveal has-multiple"
     data-autoplay="5000"
     aria-label="精选文章"
   >
@@ -762,9 +987,7 @@
                   <a class="meta-cat-link" href="/categories/ctfer/">ctfer</a>
                 </span>
               
-              <a class="read-more" href="/2026/11/18/ctfgame/%E6%9D%A5%E8%87%AAgeek%E7%9A%84ssti/"><span>阅读全文</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-</a>
+              <a class="read-more" href="/2026/11/18/ctfgame/%E6%9D%A5%E8%87%AAgeek%E7%9A%84ssti/"><span class="marker-swipe">阅读全文</span></a>
             </div>
           </div>
           <div class="featured-thumb featured-thumb--zigzag">
@@ -782,40 +1005,6 @@
           <span class="tape tape--top-center" aria-hidden="true"></span>
           <div class="featured-copy">
             <span class="label-pill">置顶</span>
-            <h1><a href="/2026/10/20/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/">blog近期的更新和规划！</a></h1>
-            <p>期待大家能够真的来水水这个评论区喵...(qaq</p>
-            <div class="meta-line">
-              <span class="meta-date">
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
-2026-10-20</span>
-              
-                <span class="meta-cat">
-                  
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-
-                  <a class="meta-cat-link" href="/categories/logs/">logs</a>
-                </span>
-              
-              <a class="read-more" href="/2026/10/20/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/"><span>阅读全文</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-</a>
-            </div>
-          </div>
-          <div class="featured-thumb featured-thumb--zigzag">
-            
-<div class="paper-thumb paper-thumb-1 paper-thumb--large paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="/images/cover/26.jpg" alt="blog近期的更新和规划！" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-          </div>
-        </article>
-      
-        <article class="featured-paper" data-index="2">
-          <span class="tape tape--top-center" aria-hidden="true"></span>
-          <div class="featured-copy">
-            <span class="label-pill">置顶</span>
             <h1><a href="/2026/10/16/ctfgame/moe2026_web/">moectf 2026-web write-up</a></h1>
             <p>我们结束了zako时间，并上传了一篇blog！</p>
             <div class="meta-line">
@@ -830,14 +1019,12 @@
                   <a class="meta-cat-link" href="/categories/ctfer/">ctfer</a>
                 </span>
               
-              <a class="read-more" href="/2026/10/16/ctfgame/moe2026_web/"><span>阅读全文</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-</a>
+              <a class="read-more" href="/2026/10/16/ctfgame/moe2026_web/"><span class="marker-swipe">阅读全文</span></a>
             </div>
           </div>
           <div class="featured-thumb featured-thumb--zigzag">
             
-<div class="paper-thumb paper-thumb-2 paper-thumb--large paper-thumb--cover">
+<div class="paper-thumb paper-thumb-1 paper-thumb--large paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/06.webp" alt="moectf 2026-web write-up" loading="lazy" referrerpolicy="no-referrer">
   
@@ -864,8 +1051,6 @@
           
             <button type="button" class="carousel-dot" data-index="1" aria-label="第 2 张"></button>
           
-            <button type="button" class="carousel-dot" data-index="2" aria-label="第 3 张"></button>
-          
         </div>
       
     </div>
@@ -873,7 +1058,7 @@
 
 
 
-  <section class="section-head">
+  <section class="section-head reveal">
     <h2>
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-history"></use></svg>
 最新文章</h2>
@@ -884,10 +1069,51 @@
   <div class="post-list">
     
       
-<article class="post-card" data-title="来自geek的SSTI例题">
-  <a class="post-thumb-link" href="/2026/11/18/ctfgame/%E6%9D%A5%E8%87%AAgeek%E7%9A%84ssti/" aria-label="来自geek的SSTI例题">
+<article class="post-card reveal" data-title="blog近期的更新和规划！" style="--reveal-delay: 0ms">
+  <a class="post-thumb-link" href="/2026/11/19/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/" aria-label="blog近期的更新和规划！">
     
 <div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/26.jpg" alt="blog近期的更新和规划！" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+  </a>
+  <div class="post-card-copy">
+    <h3><a href="/2026/11/19/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/">blog近期的更新和规划！</a></h3>
+    <p>这个……姑且算是日志吧，所以是按时间顺序从上到下的（）</p>
+    
+      <div class="meta-line meta-line--tags">
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/log/">#log</a>
+        </span>
+      </div>
+    
+    <div class="meta-line meta-line--tax">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-11-19</span>
+      
+        <span class="meta-cat">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+          <a class="meta-cat-link" href="/categories/logs/">logs</a>
+        </span>
+      
+    </div>
+  </div>
+</article>
+
+    
+      
+<article class="post-card reveal" data-title="来自geek的SSTI例题" style="--reveal-delay: 60ms">
+  <a class="post-thumb-link" href="/2026/11/18/ctfgame/%E6%9D%A5%E8%87%AAgeek%E7%9A%84ssti/" aria-label="来自geek的SSTI例题">
+    
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="来自geek的SSTI例题" loading="lazy" referrerpolicy="no-referrer">
   
@@ -925,10 +1151,10 @@
 
     
       
-<article class="post-card" data-title="非例行更新的摸鱼记记">
+<article class="post-card reveal" data-title="非例行更新的摸鱼记记" style="--reveal-delay: 120ms">
   <a class="post-thumb-link" href="/2026/11/15/daily/%E9%9D%9E%E4%BE%8B%E8%A1%8C%E6%9B%B4%E6%96%B0%E7%9A%84%E6%91%B8%E9%B1%BC%E8%AE%B0%E8%AE%B0/" aria-label="非例行更新的摸鱼记记">
     
-<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/109951170504569934.webp" alt="非例行更新的摸鱼记记" loading="lazy" referrerpolicy="no-referrer">
   
@@ -944,7 +1170,7 @@
           
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
 
-          <a class="meta-tag-link" href="/tags/smTalk/">#smTalk</a><a class="meta-tag-link" href="/tags/omakase/">#omakase</a>
+          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/smTalk/">#smTalk</a>
         </span>
       </div>
     
@@ -966,10 +1192,10 @@
 
     
       
-<article class="post-card" data-title="敏感信息泄露">
+<article class="post-card reveal" data-title="敏感信息泄露" style="--reveal-delay: 180ms">
   <a class="post-thumb-link" href="/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" aria-label="敏感信息泄露">
     
-<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="敏感信息泄露" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1007,10 +1233,10 @@
 
     
       
-<article class="post-card" data-title="敏感信息泄露">
+<article class="post-card reveal" data-title="敏感信息泄露" style="--reveal-delay: 240ms">
   <a class="post-thumb-link" href="/2026/11/09/ctfnote/%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" aria-label="敏感信息泄露">
     
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="敏感信息泄露" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1048,10 +1274,10 @@
 
     
       
-<article class="post-card" data-title="例行更新的Oct.月记">
+<article class="post-card reveal" data-title="例行更新的Oct.月记" style="--reveal-delay: 300ms">
   <a class="post-thumb-link" href="/2026/11/08/daily/%E4%BE%8B%E8%A1%8C%E6%9B%B4%E6%96%B0%E7%9A%84Oct.%E6%9C%88%E8%AE%B0/" aria-label="例行更新的Oct.月记">
     
-<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/109951170504569934.webp" alt="例行更新的Oct.月记" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1067,7 +1293,7 @@
           
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
 
-          <a class="meta-tag-link" href="/tags/smTalk/">#smTalk</a><a class="meta-tag-link" href="/tags/omakase/">#omakase</a>
+          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/smTalk/">#smTalk</a>
         </span>
       </div>
     
@@ -1089,10 +1315,10 @@
 
     
       
-<article class="post-card" data-title="WP-第17届极客大挑战">
+<article class="post-card reveal" data-title="WP-第17届极客大挑战" style="--reveal-delay: 0ms">
   <a class="post-thumb-link" href="/2026/11/05/ctfgame/17_%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/" aria-label="WP-第17届极客大挑战">
     
-<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/06.webp" alt="WP-第17届极客大挑战" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1130,10 +1356,10 @@
 
     
       
-<article class="post-card" data-title="文件上传">
+<article class="post-card reveal" data-title="文件上传" style="--reveal-delay: 60ms">
   <a class="post-thumb-link" href="/2026/11/02/ctfnote/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" aria-label="文件上传">
     
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/06.webp" alt="文件上传" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1171,10 +1397,10 @@
 
     
       
-<article class="post-card" data-title="10-19 来自DASCTF站的两题">
+<article class="post-card reveal" data-title="10-19 来自DASCTF站的两题" style="--reveal-delay: 120ms">
   <a class="post-thumb-link" href="/2026/10/20/ctfgame/10-19%20%E4%B8%A4%E9%A2%98/" aria-label="10-19 来自DASCTF站的两题">
     
-<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="10-19 来自DASCTF站的两题" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1212,10 +1438,10 @@
 
     
       
-<article class="post-card" data-title="10-20 来自DASCTF站的一题">
+<article class="post-card reveal" data-title="10-20 来自DASCTF站的一题" style="--reveal-delay: 180ms">
   <a class="post-thumb-link" href="/2026/10/20/ctfgame/10-20%20%E4%B8%80%E9%A2%98/" aria-label="10-20 来自DASCTF站的一题">
     
-<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="/images/cover/yuri_001.webp" alt="10-20 来自DASCTF站的一题" loading="lazy" referrerpolicy="no-referrer">
   
@@ -1252,47 +1478,6 @@
 </article>
 
     
-      
-<article class="post-card" data-title="blog近期的更新和规划！">
-  <a class="post-thumb-link" href="/2026/10/20/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/" aria-label="blog近期的更新和规划！">
-    
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="/images/cover/26.jpg" alt="blog近期的更新和规划！" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-  </a>
-  <div class="post-card-copy">
-    <h3><a href="/2026/10/20/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/">blog近期的更新和规划！</a></h3>
-    <p>期待大家能够真的来水水这个评论区喵...(qaq</p>
-    
-      <div class="meta-line meta-line--tags">
-        <span class="meta-tags">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
-
-          <a class="meta-tag-link" href="/tags/omakase/">#omakase</a><a class="meta-tag-link" href="/tags/log/">#log</a>
-        </span>
-      </div>
-    
-    <div class="meta-line meta-line--tax">
-      <span class="meta-date">
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
-2026-10-20</span>
-      
-        <span class="meta-cat">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-
-          <a class="meta-cat-link" href="/categories/logs/">logs</a>
-        </span>
-      
-    </div>
-  </div>
-</article>
-
-    
   </div>
 
 
@@ -1300,9 +1485,6 @@
   <nav class="pager" aria-label="文章分页">
     
       <span class="pager-link pager-link--prev is-disabled" aria-disabled="true">
-        
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
-
         <span>上一页</span>
       </span>
     
@@ -1311,10 +1493,7 @@
 
     
       <a class="pager-link pager-link--next" href="/page/2/">
-        <span>下一页</span>
-        
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-
+        <span class="marker-swipe">下一页</span>
       </a>
     
   </nav>
@@ -1337,9 +1516,7 @@
       <p class="hello"><span class="green-dot"></span>aClosure可爱的小站喵喵</p>
       <h1>全速YOSORO！</h1>
       <p class="welcome-text">这里有笔者画的大饼、ctfwp（我是彩笔）、以及一些杂谈！</p>
-      <a class="welcome-cta" href="/archives/"><span>开始阅读</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
-</a>
+      <a class="welcome-cta" href="/archives/"><span class="marker-swipe">开始阅读</span></a>
     </section>
   
   
@@ -1351,37 +1528,37 @@
     <ul class="recent-list js-random-posts">
       
         <li>
+          <a class="recent-item" href="/2026/11/19/daily/blog%E8%BF%91%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0%E5%92%8C%E8%A7%84%E5%88%92%EF%BC%81/">
+            <strong><span class="marker-swipe">blog近期的更新和规划！</span></strong>
+            <em>2026-11-19</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/2026/11/18/ctfgame/%E6%9D%A5%E8%87%AAgeek%E7%9A%84ssti/">
-            <strong>来自geek的SSTI例题</strong>
+            <strong><span class="marker-swipe">来自geek的SSTI例题</span></strong>
             <em>2026-11-18</em>
           </a>
         </li>
       
         <li>
           <a class="recent-item" href="/2026/11/15/daily/%E9%9D%9E%E4%BE%8B%E8%A1%8C%E6%9B%B4%E6%96%B0%E7%9A%84%E6%91%B8%E9%B1%BC%E8%AE%B0%E8%AE%B0/">
-            <strong>非例行更新的摸鱼记记</strong>
+            <strong><span class="marker-swipe">非例行更新的摸鱼记记</span></strong>
             <em>2026-11-15</em>
           </a>
         </li>
       
         <li>
           <a class="recent-item" href="/2026/11/09/ctfnote/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
-            <strong>敏感信息泄露</strong>
+            <strong><span class="marker-swipe">敏感信息泄露</span></strong>
             <em>2026-11-09</em>
           </a>
         </li>
       
         <li>
           <a class="recent-item" href="/2026/11/09/ctfnote/%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">
-            <strong>敏感信息泄露</strong>
+            <strong><span class="marker-swipe">敏感信息泄露</span></strong>
             <em>2026-11-09</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/11/08/daily/%E4%BE%8B%E8%A1%8C%E6%9B%B4%E6%96%B0%E7%9A%84Oct.%E6%9C%88%E8%AE%B0/">
-            <strong>例行更新的Oct.月记</strong>
-            <em>2026-11-08</em>
           </a>
         </li>
       
@@ -1398,11 +1575,11 @@
 
   
 <footer class="site-footer">
-  <span class="site-footer__left">© 奇妙的喵喵据点 By kur0sia!</span>
+  <span class="site-footer__left">© 奇妙的喵喵据点 By kur0sia! <label hidden id="fp-system-label"><input type="checkbox" id="fp-system-mode"> 跟随系统配色</label></span>
   
     <span class="site-footer__right">
       
-        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+        <span class="site-footer__row"><span class="site-footer__powered"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span></span>
       
     </span>
   
@@ -1434,7 +1611,7 @@
 </div>
 
   <script>
-  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","typed.from":"出自","reward_list.total":"共 %s 人","reward_list.updated":"最新更新时间：","stack_album.label":"堆叠相册","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
   </script>
   
 <script src="/js/main.js"></script>
